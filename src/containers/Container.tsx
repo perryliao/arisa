@@ -49,6 +49,7 @@ interface IContainerProps {
 	userKey?: userName,
 	catalogueLength?: number;
 	changePage?: (page: any) => () => void;
+	updateCurrentViewingPointPrice?: (price: string) => void;
 }
 
 interface IContainerState {

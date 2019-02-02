@@ -30,6 +30,7 @@ class App extends React.Component<IAppProps, IAppState> {
         currentPage: page.UserPortalLogin,
         loginPopupOpen: false,
         balancePopupOpen: false,
+        currentViewingPointPrice: "0",
     };
 
     private static pages: { [key: string]: { pointer: any, name: string } } = {
@@ -54,6 +55,7 @@ class App extends React.Component<IAppProps, IAppState> {
         this.addToCatalogue = this.addToCatalogue.bind(this);
         this.removeFromCatalogue = this.removeFromCatalogue.bind(this);
         this.editPartnerOptions = this.editPartnerOptions.bind(this);
+        this.updateCurrentViewingPointPrice = this.updateCurrentViewingPointPrice.bind(this);
     }
 
     private toggle(): void {
@@ -168,6 +170,7 @@ class App extends React.Component<IAppProps, IAppState> {
             catalogueLength: Object.keys(this.state.database.partners[this.state.partnerKey].catalogue).length,
             makeTransaction: this.makeTransaction,
             changePage: this.changePage,
+            updateCurrentViewingPointPrice: this.updateCurrentViewingPointPrice,
         };
         return React.createElement(App.pages[this.state.currentPage].pointer, props);
     }
@@ -197,6 +200,12 @@ class App extends React.Component<IAppProps, IAppState> {
 
     private toggleBalancePopup(): void {
         this.setState({balancePopupOpen: !this.state.balancePopupOpen});
+    }
+
+    private updateCurrentViewingPointPrice(newPrice: string): void {
+        this.setState({
+            currentViewingPointPrice: newPrice,
+        })
     }
 
     public render() {
@@ -238,6 +247,7 @@ interface IAppState {
     currentPage: page;
     loginPopupOpen: boolean;
     balancePopupOpen: boolean;
+    currentViewingPointPrice: string;
 }
 
 export default App;

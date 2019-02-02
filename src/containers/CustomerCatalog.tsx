@@ -60,7 +60,10 @@ class CustomerCatalog extends Container<ICustomerCatalogProps, ICustomerCatalogS
 	}
 
 	private handleProductCustomerSelection(props: ICatalogItemProps, dumbVariableFromBadCodeDontUse: boolean): void {
-		console.log("props:", props);
+		// console.log("props:", props.pointsPrice);
+		this.props.updateCurrentViewingPointPrice(props.pointsPrice);
+
+		// TODO prompt pop up
 	}
 
 	public render(): ReactNode {
