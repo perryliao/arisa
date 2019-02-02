@@ -10,6 +10,7 @@ import {IProductInterface} from "./bestBuyAPIs/bestBuyAPIs";
 import {PartnerCatalog} from "./containers/PartnerCatalog";
 import {PartnerConfig} from "./containers/PartnerConfig";
 import {Login} from "./components/PopupContents/Login";
+import {Balance} from "./components/PopupContents/Balance";
 
 enum page {
 	PartnerPortalLogin,
@@ -160,7 +161,7 @@ class App extends React.Component<IAppProps, IAppState> {
 					toggleFn: this.toggleBalancePopup,
 					open: this.state.balancePopupOpen,
 					modalText: "balance",
-					component: <Login/>,
+					component: <Balance onClick={this.toggleBalancePopup}/>,
 					rounded: true
 				};
 			case PopupModalsEnum.PROCESSING:
