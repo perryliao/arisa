@@ -22,6 +22,22 @@
   font-size: large;
 }
 
+.BestBuyBlue {
+  color: #0044c3;
+}
+
+.BestBuyYellow {
+  color: #fff001;
+}
+
+.BestBuyBlack {
+  color: #0e2324;
+}
+
+.BestBuyWhite {
+  color: #ffffff;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
