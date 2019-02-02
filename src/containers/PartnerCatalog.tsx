@@ -61,6 +61,7 @@ class PartnerCatalog extends Container<IPartnerCatalogProps, IPartnerCatalogStat
 
             products.push(
                 <CatalogItem
+                    catalog={this.props.database.partners[this.props.partnerKey].catalogue}
                     title={paramProducts[product].name}
                     description={paramProducts[product].description}
                     bestBuyPrice={paramProducts[product].price}
