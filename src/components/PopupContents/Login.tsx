@@ -3,6 +3,7 @@ import {ReactNode} from "react";
 import {EnhancedComponent, IEnhancedComponentProps, IEnhancedComponentState} from "../EnhancedComponent";
 import {TextInput} from "../TextInput";
 import {Button} from "reactstrap";
+import "../../App.css";
 
 class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 
@@ -22,7 +23,7 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 		return (
 			<div style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 				<img src={"rbc_icon.png"}/>
-				<div className={"popupHeaderText"}>Login to RBC</div>
+				<p className={"popupHeaderText"}>Login to RBC</p>
 				<TextInput placeholder={"Name"} inputProps={{
 					// @ts-ignore
 					onChange: (value: string) => {
