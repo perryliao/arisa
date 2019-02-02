@@ -30,7 +30,7 @@ class App extends React.Component<IAppProps, IAppState> {
 		balancePopupOpen: false,
 		processingPopupOpen: false,
 		donePopupOpen: false,
-		currentPage: page.PartnerCatalogueSettings,
+		currentPage: page.UserPortalLogin,
 	};
 
 	private static pages: {[key: string]: {pointer: any, name: string}} = {
@@ -153,7 +153,7 @@ class App extends React.Component<IAppProps, IAppState> {
 					toggleFn: this.toggleLoginPopup,
 					open: this.state.loginPopupOpen,
 					modalText: "login",
-					component: <Login/>
+					component: <Login onClick={this.toggleLoginPopup}/>
 				};
 			case PopupModalsEnum.BALANCE:
 				return {

@@ -38,6 +38,8 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
 						value={this.state.text}
 						onChange={this.handleTextChange}
 						className={"TextInput"}
+						style={{width: "100%"}}
+						placeholder={this.props.placeholder}
 					/>
 				</label>
 			</div>
@@ -47,6 +49,7 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
 
 interface ITextInputProps extends IEnhancedComponentProps {
 	magGlass?: boolean;
+	placeholder?: string;
 }
 
 interface ITextInputState extends IEnhancedComponentState {
