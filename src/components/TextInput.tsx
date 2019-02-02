@@ -25,7 +25,7 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
         // this.setState({text: event.target.value}, () => {
             if (this.props.inputProps && this.props.inputProps.onChange) {
                 // @ts-ignore
-                this.props.inputProps.onChange(event.target.value)
+                this.props.inputProps.onChange(event.target.value.trim())
             }
         // });
     }
