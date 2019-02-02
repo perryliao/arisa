@@ -3,10 +3,6 @@ import {ReactNode} from "react";
 
 abstract class Container<P extends IContainerProps = IContainerProps, S extends IContainerState = IContainerState> extends React.PureComponent<P, S> {
 
-	public static defaultProps: IContainerProps = {
-
-	};
-
 	private readonly childRender: () => ReactNode;
 
 	protected constructor(props: P) {
@@ -36,7 +32,9 @@ abstract class Container<P extends IContainerProps = IContainerProps, S extends 
 }
 
 interface IContainerProps {
-
+	toggle
+	loginUser: (username: string, password: string) => Promise<boolean>
+	loginPartner: (username: string, password: string) => Promise<boolean>
 }
 
 interface IContainerState {
