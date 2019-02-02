@@ -7,7 +7,7 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 
 	public static defaultProps: IPopupProps = {
 		...EnhancedComponent.defaultProps,
-		reqs: {open: false, toggleFn: () => {}},
+		reqs: {open: false, toggleFn: () => {}, modalText: "default"},
 	};
 
 	protected constructor(props: IPopupProps) {
@@ -32,10 +32,10 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 					toggle={this.props.reqs.toggleFn}
 				>
 					<ModalBody>
-						asdf
+						{this.props.reqs.modalText}
 					</ModalBody>
 					<ModalFooter>
-						<Button color="primary" onClick={this.props.reqs.toggleFn}>Do Something</Button>{' '}
+						<Button color="primary" onClick={this.props.reqs.toggleFn}>Confirm</Button>{' '}
 						<Button color="secondary" onClick={this.props.reqs.toggleFn}>Cancel</Button>
 					</ModalFooter>
 				</Modal>
@@ -54,6 +54,7 @@ interface IPopupState extends IEnhancedComponentState {
 interface IPopupReqs {
 	toggleFn: () => void;
 	open: boolean;
+	modalText: string;
 }
 
 export {Popup, IPopupProps, IPopupState, IPopupReqs};

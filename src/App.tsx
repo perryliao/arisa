@@ -118,16 +118,30 @@ class App extends React.Component<IAppProps, IAppState> {
 		switch(key) {
 			case PopupModalsEnum.LOGIN:
 				// open payment
-				return {toggleFn: this.toggleLoginPopup, open: this.state.loginPopupOpen};
+				return {
+					toggleFn: this.toggleLoginPopup,
+					open: this.state.loginPopupOpen,
+					modalText: "login"
+				};
 			case PopupModalsEnum.BALANCE:
-				return {toggleFn: this.toggleBalancePopup, open: this.state.balancePopupOpen};
+				return {
+					toggleFn: this.toggleBalancePopup,
+					open: this.state.balancePopupOpen,
+					modalText: "balance"
+				};
 			case PopupModalsEnum.PROCESSING:
-				return {toggleFn: this.toggleProcessingPopup, open: this.state.processingPopupOpen};
-			case PopupModalsEnum.DONE:
-				return {toggleFn: this.toggleDonePopup, open: this.state.donePopupOpen};
+				return {
+					toggleFn: this.toggleProcessingPopup,
+					open: this.state.processingPopupOpen,
+					modalText: "processing"
+				};
 			default:
-				// never come here
-				return {toggleFn: this.toggleDonePopup, open: this.state.donePopupOpen};
+				// default done
+				return {
+					toggleFn: this.toggleDonePopup,
+					open: this.state.donePopupOpen,
+					modalText: "DOne"
+				};
 		}
 	}
 
