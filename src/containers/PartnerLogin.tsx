@@ -24,10 +24,13 @@ class PartnerLogin extends Container<IPartnerLoginProps, IPartnerLoginState> {
 
 	public render(): ReactNode {
 		return (
-			<div className={"CenterAllColumn"} style={{height: "100%"}}>
+			<div className={"CenterAllColumn"}>
+				<div style={{marginTop: 30}}/>
 				<Login
 					login={this.props.loginPartner}
 					onClick={this.loginOnClick}
+					title={"Partner Login"}
+					imageSrc={"bestbuydark.png"}
 				/>
 			</div>
 		);

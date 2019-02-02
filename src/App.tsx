@@ -240,7 +240,7 @@ class App extends React.Component<IAppProps, IAppState> {
 
         return (
             <div className="App">
-                <Navbar color="dark" dark={true} expand="md">
+                <Navbar style={{backgroundColor: this.state.database.partners[this.state.partnerKey].primaryColour}} dark={true} expand="md">
                     <NavbarBrand href="#">{this.state.partnerKey}</NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar={true}>

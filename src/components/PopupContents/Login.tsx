@@ -57,8 +57,8 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 	public render(): ReactNode {
 		return (
 			<div className={"CenterAllColumn"}>
-				<img src={"rbc_icon.png"}/>
-				<p className={"BestBuyBlack popupHeaderText"}>Login to RBC</p>
+				<img width={this.props.imageSrc && "70%"} src={this.props.imageSrc ? this.props.imageSrc : "rbc_icon.png"}/>
+				<p className={"BestBuyBlack popupHeaderText"}>{this.props.title ? this.props.title : "Login to RBC"}</p>
 				<TextInput inputProps={{onChange: this.saveName}} placeholder={"Name"}/>
 				<TextInput inputProps={{onChange: this.savePassword}} placeholder={"Password"} secureText={true}/>
 				<div style={{height: 15}}/>
@@ -70,6 +70,8 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 
 interface ILoginProps extends IEnhancedComponentProps {
 	onClick?: () => void;
+	imageSrc?: string;
+	title?: string;
 	login?: (username: string, password: string) => Promise<boolean>;
 	balancePopupFn?: () => void;
 }

@@ -36,7 +36,7 @@ export enum userName {
 }
 
 export enum partnerName {
-	RBC = "Royal Bank of Canada",
+	RBC = "RBC",
 	TD = "TD Canada",
 	SCOTIABANK = "Scotiabank",
 }
@@ -61,7 +61,7 @@ const defaultPartner: IPartner = {
 	users: defaultUsers,
 	catalogue: defaultCatalogue,
 	logo: "/logo.svg",
-	primaryColour: "#002aff",
+	primaryColour: "#0e2324",
 	secondaryColour: "#ffbc06",
 	pointsToCent: 1,
 	transactionEndpoint: "www.partner-website.com/transaction-endpoint",
