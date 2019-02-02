@@ -10,6 +10,17 @@ import {
 	NavLink,
 } from "reactstrap";
 import {defaultDatabase, IDatabase, IPartner, IUser, partnerName, userName} from "./data/database";
+import {ReactNode} from "react";
+import {IContainerProps} from "./containers/Container";
+import {CustomerCatalog} from "./containers/CustomerCatalog";
+
+enum page {
+	PartnerPortalLogin,
+	PartnerPortalSettings,
+	PartnerCatalogueSettings,
+	UserPortalLogin,
+	UserPortalStore,
+}
 
 class App extends React.Component<IAppProps, IAppState> {
 
@@ -18,7 +29,15 @@ class App extends React.Component<IAppProps, IAppState> {
 		partnerKey: partnerName.RBC,
 		userKey: userName.MICHELLE,
 		isOpen: true,
-		currentPage: "",
+		currentPage: page.PartnerPortalLogin,
+	};
+
+	private static pages: {[key: string]: {pointer: any, name: string}} = {
+		[page.PartnerPortalLogin]: {pointer: CustomerCatalog, name: "Partner Login"},
+		[page.PartnerPortalSettings]: {pointer: CustomerCatalog, name: "Partner Settings"},
+		[page.PartnerCatalogueSettings]: {pointer: CustomerCatalog, name: "Partner Catalogue"},
+		[page.UserPortalLogin]: {pointer: CustomerCatalog, name: "User Login"},
+		[page.UserPortalStore]: {pointer: CustomerCatalog, name: "User Store"},
 	};
 
 	constructor(props: IAppProps) {
@@ -27,6 +46,8 @@ class App extends React.Component<IAppProps, IAppState> {
 		this.loginPartner = this.loginPartner.bind(this);
 		this.toggle = this.toggle.bind(this);
 		this.changePage = this.changePage.bind(this);
+		this.createNavLinks = this.createNavLinks.bind(this);
+		this.determinePage = this.determinePage.bind(this);
 	}
 
 	private toggle(): void {
@@ -35,10 +56,10 @@ class App extends React.Component<IAppProps, IAppState> {
 		});
 	}
 
-	private changePage(page: string): () => void {
+	private changePage(page: any): () => void {
 		const that: App = this;
 		return (): void => {
-			that.setState({currentPage: page});
+			that.setState({currentPage: page as page});
 		};
 	}
 
@@ -68,56 +89,47 @@ class App extends React.Component<IAppProps, IAppState> {
 		return !(partner === undefined || partner.password !== password);
 	}
 
+	private createNavLinks(pageKey: any): ReactNode {
+		return (
+			<NavItem key={pageKey}>
+				<NavLink
+					onClick={this.changePage(pageKey)}
+					href="#"
+					selected={this.state.currentPage === pageKey}
+				>
+					{App.pages[pageKey].name}
+				</NavLink>
+			</NavItem>
+		)
+	}
+
+	private determinePage(): ReactNode {
+		const props: IContainerProps = {
+			loginUser: this.loginUser,
+			loginPartner: this.loginPartner,
+		};
+		return React.createElement(App.pages[this.state.currentPage].pointer, props);
+	}
 
 	public render() {
+		const keys = Object.keys(page)
+			.filter(k => typeof page[k as any] === "number"); // ["A", "B"]
+		const links: any[] = keys.map(k => page[k as any]); // [0, 1]
+
 		return (
 			<div className="App">
 				<Navbar color="dark" dark={true} expand="md">
-					<NavbarBrand href="https://www.lucky9lanes.com/">Lucky 9 Lanes</NavbarBrand>
+					<NavbarBrand href="#">{this.state.partnerKey}</NavbarBrand>
 					<NavbarToggler onClick={this.toggle}/>
 					<Collapse isOpen={this.state.isOpen} navbar={true}>
 						<Nav className="ml-auto" navbar={true}>
-							<NavItem>
-								<NavLink
-									onClick={this.changePage("description")}
-									href="#"
-								>
-									Description
-								</NavLink>
-							</NavItem>
-							<NavItem>
-								<NavLink
-									onClick={this.changePage("versionA")}
-									selected={this.state.currentPage === "versionA"}
-									href="#"
-								>
-									Version A
-								</NavLink>
-							</NavItem>
-							<NavItem>
-								<NavLink
-									onClick={this.changePage("versionB")}
-									selected={this.state.currentPage === "versionB"}
-									href="#"
-								>
-									Version B
-								</NavLink>
-							</NavItem>
-							<NavItem>
-								<NavLink
-									onClick={this.changePage("adminPortal")}
-									selected={this.state.currentPage === "adminPortal"}
-									href="#"
-								>
-									Admin Portal
-								</NavLink>
-							</NavItem>
+							{links.map(this.createNavLinks)}
 						</Nav>
 					</Collapse>
 				</Navbar>
-				<p className="App-intro">
-					To get started, edit <code>src/App.tsx</code> and save to reload.
-				</p>
+				<div className="container">
+					{this.determinePage()}
+				</div>
 			</div>
 		);
 	}
@@ -132,7 +144,7 @@ interface IAppState {
 	partnerKey: partnerName,
 	userKey: userName,
 	isOpen: boolean;
-	currentPage: string;
+	currentPage: page;
 }
 
 export default App;
