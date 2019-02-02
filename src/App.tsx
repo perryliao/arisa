@@ -238,9 +238,10 @@ class App extends React.Component<IAppProps, IAppState> {
             .filter(k => typeof page[k as any] === "number"); // ["A", "B"]
         const links: any[] = keys.map(k => page[k as any]); // [0, 1]
 
+		const headerColour: string = this.state.database.partners[this.state.partnerKey].primaryColour;
         return (
             <div className="App">
-                <Navbar style={{backgroundColor: this.state.database.partners[this.state.partnerKey].primaryColour}} dark={true} expand="md">
+                <Navbar style={{backgroundColor: headerColour ? headerColour : "#0e2324"}} dark={true} expand="md">
                     <NavbarBrand href="#">{this.state.partnerKey}</NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar={true}>

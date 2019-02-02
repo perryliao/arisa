@@ -8,7 +8,7 @@ class Balance extends EnhancedComponent<IBalanceProps, IBalanceState> {
 
 	public static defaultProps: IBalanceProps = {
 		...EnhancedComponent.defaultProps,
-		myPoints: 42069,
+		myPoints: 100000,
 		addedPoints: "15000",
 	};
 
