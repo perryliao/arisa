@@ -53,6 +53,7 @@ class App extends React.Component<IAppProps, IAppState> {
         this.toggleBalancePopup = this.toggleBalancePopup.bind(this);
         this.addToCatalogue = this.addToCatalogue.bind(this);
         this.removeFromCatalogue = this.removeFromCatalogue.bind(this);
+        this.editPartnerOptions = this.editPartnerOptions.bind(this);
     }
 
     private toggle(): void {
@@ -101,33 +102,58 @@ class App extends React.Component<IAppProps, IAppState> {
         }
     }
 
-    private async loginPartner(username: string, password: string): Promise<boolean> {
-        const partner: IPartner = this.state.database.partners[username];
-        const success: boolean = !(partner === undefined || partner.password !== password);
-        if (!success) {
-            return false;
-        }
-        const that: App = this;
-        await new Promise((resolve: () => void) => {
-            that.setState({partnerKey: username as partnerName}, resolve);
-        });
-        return !(partner === undefined || partner.password !== password);
-    }
+	private async makeTransaction(points: number): Promise<boolean> {
+		const user: IUser = this.state.database.partners[this.state.partnerKey].users[this.state.userKey];
+		if (points > user.balance) {
+			return false;
+		}
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		database.partners[this.state.partnerKey].users[this.state.userKey].balance -= points;
+		await new Promise((resolve: () => void) => {
+			this.setState({database}, resolve)
+		});
+		return true;
+	}
 
-    private createNavLinks(pageKey: any): ReactNode {
-        return (
-            <NavItem key={pageKey}>
-                <NavLink
-                    onClick={this.changePage(pageKey)}
-                    href="#"
-                    selected={this.state.currentPage === pageKey}
-                >
-                    {App.pages[pageKey].name}
-                </NavLink>
-            </NavItem>
-        )
-    }
+	private async loginPartner(username: string, password: string): Promise<boolean> {
+		const partner: IPartner = this.state.database.partners[username];
+		const success: boolean = !(partner === undefined || partner.password !== password);
+		if (!success) {
+			return false;
+		}
+		const that: App = this;
+		await new Promise((resolve: () => void) => {
+			that.setState({partnerKey: username as partnerName}, resolve);
+		});
+		return !(partner === undefined || partner.password !== password);
+	}
 
+	private async editPartnerOptions(partnerOptions: IPartnerOptions): Promise<void> {
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		database.partners[this.state.partnerKey] = {
+			...database.partners[this.state.partnerKey],
+			...partnerOptions,
+		};
+		await new Promise((resolve: () => void) => {
+			this.setState({database}, resolve)
+		});
+	}
+
+	private createNavLinks(pageKey: any): ReactNode {
+		return (
+			<NavItem key={pageKey}>
+				<NavLink
+					onClick={this.changePage(pageKey)}
+					href="#"
+					selected={this.state.currentPage === pageKey}
+				>
+					{App.pages[pageKey].name}
+				</NavLink>
+			</NavItem>
+		)
+	}
+
+			
     private determinePage(): ReactNode {
         const props: IContainerProps = {
             loginUser: this.loginUser,
@@ -139,6 +165,7 @@ class App extends React.Component<IAppProps, IAppState> {
             partnerKey: this.state.partnerKey,
             userKey: this.state.userKey,
             catalogueLength: Object.keys(this.state.database.partners[this.state.partnerKey].catalogue).length,
+            makeTransaction: this.makeTransaction,
         };
         return React.createElement(App.pages[this.state.currentPage].pointer, props);
     }
