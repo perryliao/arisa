@@ -1,21 +1,15 @@
 import * as React from 'react';
+import {ReactNode} from 'react';
 import './App.css';
-import {
-	Collapse,
-	Nav,
-	Navbar,
-	NavbarToggler,
-	NavbarBrand,
-	NavItem,
-	NavLink,
-} from "reactstrap";
+import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,} from "reactstrap";
 import {defaultDatabase, IDatabase, IPartner, IUser, partnerName, userName} from "./data/database";
-import {ReactNode} from "react";
-import {IContainerProps} from "./containers/Container";
+import {IContainerProps, PopupModalsEnum} from "./containers/Container";
 import {CustomerCatalog} from "./containers/CustomerCatalog";
+import {IPopupReqs, Popup} from "./components/Popup";
 import {IProductInterface} from "./bestBuyAPIs/bestBuyAPIs";
 import {PartnerCatalog} from "./containers/PartnerCatalog";
 import {PartnerConfig} from "./containers/PartnerConfig";
+import {Login} from "./components/PopupContents/Login";
 
 enum page {
 	PartnerPortalLogin,
@@ -33,6 +27,11 @@ class App extends React.Component<IAppProps, IAppState> {
 		userKey: userName.MICHELLE,
 		isOpen: true,
 		currentPage: page.PartnerPortalSettings,
+		loginPopupOpen: false,
+		balancePopupOpen: false,
+		processingPopupOpen: false,
+		donePopupOpen: false,
+		currentPage: page.PartnerCatalogueSettings,
 	};
 
 	private static pages: {[key: string]: {pointer: any, name: string}} = {
@@ -51,6 +50,11 @@ class App extends React.Component<IAppProps, IAppState> {
 		this.changePage = this.changePage.bind(this);
 		this.createNavLinks = this.createNavLinks.bind(this);
 		this.determinePage = this.determinePage.bind(this);
+		this.determineModalFunction = this.determineModalFunction.bind(this);
+		this.toggleLoginPopup = this.toggleLoginPopup.bind(this);
+		this.toggleBalancePopup = this.toggleBalancePopup.bind(this);
+		this.toggleProcessingPopup = this.toggleProcessingPopup.bind(this);
+		this.toggleDonePopup = this.toggleDonePopup.bind(this);
 		this.addToCatalogue = this.addToCatalogue.bind(this);
 		this.removeFromCatalogue = this.removeFromCatalogue.bind(this);
 	}
@@ -132,13 +136,68 @@ class App extends React.Component<IAppProps, IAppState> {
 		const props: IContainerProps = {
 			loginUser: this.loginUser,
 			loginPartner: this.loginPartner,
+			modalFunction: this.determineModalFunction,
 			addToCatalogue: this.addToCatalogue,
 			removeFromCatalogue: this.removeFromCatalogue,
 			database: this.state.database,
 			partnerKey: this.state.partnerKey,
-			userKey: this.state.userKey,
+			userKey: this.state.userKey
 		};
 		return React.createElement(App.pages[this.state.currentPage].pointer, props);
+	}
+
+	private determineModalFunction(key: PopupModalsEnum): IPopupReqs {
+		switch(key) {
+			case PopupModalsEnum.LOGIN:
+				// open payment
+				return {
+					toggleFn: this.toggleLoginPopup,
+					open: this.state.loginPopupOpen,
+					modalText: "login",
+					component: <Login/>
+				};
+			case PopupModalsEnum.BALANCE:
+				return {
+					toggleFn: this.toggleBalancePopup,
+					open: this.state.balancePopupOpen,
+					modalText: "balance",
+					component: <Login/>,
+					rounded: true
+				};
+			case PopupModalsEnum.PROCESSING:
+				return {
+					toggleFn: this.toggleProcessingPopup,
+					open: this.state.processingPopupOpen,
+					modalText: "processing",
+					component: <Login/>
+				};
+			default:
+				// default done
+				return {
+					toggleFn: this.toggleDonePopup,
+					open: this.state.donePopupOpen,
+					modalText: "DOne",
+					component: <Login/>
+				};
+		}
+	}
+
+	private toggleLoginPopup(): void {
+		this.setState({loginPopupOpen: !this.state.loginPopupOpen}, () => {
+			console.log("login popup clicked");
+		});
+	}
+
+	private toggleBalancePopup(): void {
+		this.setState({balancePopupOpen: !this.state.balancePopupOpen});
+	}
+
+	private toggleProcessingPopup(): void {
+		this.setState({processingPopupOpen: !this.state.processingPopupOpen});
+	}
+
+	private toggleDonePopup(): void {
+		this.setState({donePopupOpen: !this.state.donePopupOpen});
 	}
 
 	public render() {
@@ -158,6 +217,10 @@ class App extends React.Component<IAppProps, IAppState> {
 					</Collapse>
 				</Navbar>
 				<div className="container">
+					{this.state.loginPopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.LOGIN)}/>}
+					{this.state.balancePopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.BALANCE)}/>}
+					{this.state.processingPopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.PROCESSING)}/>}
+					{this.state.donePopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.DONE)}/>}
 					{this.determinePage()}
 				</div>
 			</div>
@@ -175,6 +238,10 @@ interface IAppState {
 	userKey: userName,
 	isOpen: boolean;
 	currentPage: page;
+	loginPopupOpen: boolean;
+	balancePopupOpen: boolean;
+	processingPopupOpen: boolean;
+	donePopupOpen: boolean;
 }
 
 export default App;

@@ -1,5 +1,6 @@
 import * as React from "react";
 import {ReactNode} from "react";
+import {IPopupReqs, Popup} from "../components/Popup";
 import {IProductInterface} from "../bestBuyAPIs/bestBuyAPIs";
 import {IDatabase, partnerName, userName} from "../data/database";
 
@@ -36,8 +37,9 @@ abstract class Container<P extends IContainerProps = IContainerProps, S extends 
 }
 
 interface IContainerProps {
-	loginUser?: (username: string, password: string) => Promise<boolean>,
-	loginPartner?: (username: string, password: string) => Promise<boolean>,
+	loginUser?: (username: string, password: string) => Promise<boolean>;
+	loginPartner?: (username: string, password: string) => Promise<boolean>;
+	modalFunction?: (key: PopupModalsEnum) => IPopupReqs;
 	addToCatalogue?: (product: IProductInterface) => Promise<void>,
 	removeFromCatalogue?: (product: IProductInterface) => Promise<void>,
 	database?: IDatabase,
@@ -49,4 +51,11 @@ interface IContainerState {
 
 }
 
-export {Container, IContainerState, IContainerProps};
+enum PopupModalsEnum {
+	LOGIN,
+	BALANCE,
+	PROCESSING,
+	DONE,
+}
+
+export {Container, IContainerState, IContainerProps, PopupModalsEnum};
