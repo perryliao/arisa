@@ -2,7 +2,6 @@ import * as React from "react";
 import {ReactNode} from "react";
 import {EnhancedComponent, IEnhancedComponentProps, IEnhancedComponentState} from "../EnhancedComponent";
 import "../../App.css";
-import {TextInput} from "../TextInput";
 import {Button} from "reactstrap";
 
 class Balance extends EnhancedComponent<IBalanceProps, IBalanceState> {
@@ -19,6 +18,13 @@ class Balance extends EnhancedComponent<IBalanceProps, IBalanceState> {
 		this.state = {
 			...this.state,
 		};
+
+		this.callFn = this.callFn.bind(this);
+	}
+
+	private callFn(): void {
+		this.props.onClick();
+		this.props.callDone();
 	}
 
 	public render(): ReactNode {
@@ -27,15 +33,15 @@ class Balance extends EnhancedComponent<IBalanceProps, IBalanceState> {
 				<div className={"alignRight"}>
 					<p className={"BestBuyBlack popupHeaderText"}>Balance</p>
 					<div style={{alignItems: "flex-start"}}>
-						<p style={{fontWeight: 500}}>{"   " + this.props.myPoints.toString() + " Pts"}</p>
-						<p>{"-" + this.props.addedPoints.toString() + " Pts"}</p>
+						<p style={{fontWeight: 500, fontSize: 24}}>{"   " + this.props.myPoints.toString() + " Pts"}</p>
+						<p style={{fontSize: 24, fontWeight: 300}}>{"-" + this.props.addedPoints.toString() + " Pts"}</p>
 						<hr/>
-						<p style={{fontWeight: 500}}>{"   " + (this.props.myPoints - parseInt(this.props.addedPoints, 10)).toString() + " Pts"}</p>
-						<p style={{fontSize: 8}}> remaining</p>
+						<p style={{fontWeight: 500, fontSize: 24}}>{"   " + (this.props.myPoints - parseInt(this.props.addedPoints, 10)).toString() + " Pts"}</p>
+						<p style={{fontSize: 14}}> remaining</p>
 					</div>
 				</div>
 				<div style={{height: 15}}/>
-				<Button className={"jerryButton"} onClick={this.props.onClick}>Done</Button>{' '}
+				<Button className={"jerryButton"} onClick={this.callFn}>Done</Button>{' '}
 			</div>
 		);
 	}
@@ -45,6 +51,7 @@ interface IBalanceProps extends IEnhancedComponentProps {
 	myPoints: number;
 	addedPoints: string;
 	onClick?: () => void;
+	callDone?: () => void;
 }
 
 interface IBalanceState extends IEnhancedComponentState {

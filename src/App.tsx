@@ -3,7 +3,7 @@ import {ReactNode} from 'react';
 import './App.css';
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,} from "reactstrap";
 import {defaultDatabase, IDatabase, IPartner, IPartnerOptions, IUser, partnerName, userName} from "./data/database";
-import {Container, IContainerProps, PopupModalsEnum} from "./containers/Container";
+import {IContainerProps, PopupModalsEnum} from "./containers/Container";
 import {CustomerCatalog} from "./containers/CustomerCatalog";
 import {IPopupReqs, Popup} from "./components/Popup";
 import {IProductInterface} from "./bestBuyAPIs/bestBuyAPIs";
@@ -11,6 +11,7 @@ import {PartnerCatalog} from "./containers/PartnerCatalog";
 import {PartnerConfig} from "./containers/PartnerConfig";
 import {Login} from "./components/PopupContents/Login";
 import {Balance} from "./components/PopupContents/Balance";
+import {Done} from "./components/PopupContents/Done";
 
 export enum page {
     PartnerPortalLogin,
@@ -30,6 +31,7 @@ class App extends React.Component<IAppProps, IAppState> {
         currentPage: page.PartnerPortalSettings,
         loginPopupOpen: false,
         balancePopupOpen: false,
+		donePopupOpen: false,
         currentViewingPointPrice: "0",
     };
 
@@ -51,7 +53,8 @@ class App extends React.Component<IAppProps, IAppState> {
         this.determinePage = this.determinePage.bind(this);
         this.determineModalFunction = this.determineModalFunction.bind(this);
         this.toggleLoginPopup = this.toggleLoginPopup.bind(this);
-        this.toggleBalancePopup = this.toggleBalancePopup.bind(this);
+		this.toggleBalancePopup = this.toggleBalancePopup.bind(this);
+		this.toggleDonePopup = this.toggleDonePopup.bind(this);
         this.addToCatalogue = this.addToCatalogue.bind(this);
         this.removeFromCatalogue = this.removeFromCatalogue.bind(this);
         this.editPartnerOptions = this.editPartnerOptions.bind(this);
@@ -188,11 +191,24 @@ class App extends React.Component<IAppProps, IAppState> {
 						balancePopupFn={this.toggleBalancePopup}
 					/>
                 };
+			case PopupModalsEnum.DONE:
+				// open DONE
+				return {
+					toggleFn: this.toggleDonePopup,
+					open: this.state.donePopupOpen,
+					component: <Done
+						onClick={this.toggleDonePopup}
+					/>
+				}
             default:
                 return {
                     toggleFn: this.toggleBalancePopup,
                     open: this.state.balancePopupOpen,
-                    component: <Balance onClick={this.toggleBalancePopup} addedPoints={this.state.currentViewingPointPrice}/>,
+                    component: <Balance
+						onClick={this.toggleBalancePopup}
+						addedPoints={this.state.currentViewingPointPrice}
+						callDone={this.toggleDonePopup}
+					/>,
                     rounded: true
                 };
         }
@@ -205,6 +221,10 @@ class App extends React.Component<IAppProps, IAppState> {
     private toggleBalancePopup(): void {
         this.setState({balancePopupOpen: !this.state.balancePopupOpen});
     }
+
+	private toggleDonePopup(): void {
+		this.setState({donePopupOpen: !this.state.donePopupOpen});
+	}
 
     private updateCurrentViewingPointPrice(newPrice: string): void {
         this.setState({
@@ -241,6 +261,12 @@ class App extends React.Component<IAppProps, IAppState> {
 							modalClassName={"balancePopup"}
 						/>
                    	}
+					{this.state.donePopupOpen &&
+                    <Popup
+                        reqs={this.determineModalFunction(PopupModalsEnum.DONE)}
+                        modalClassName={"loginPopup"}
+                    />
+					}
                     {this.determinePage()}
                 </div>
             </div>
@@ -259,7 +285,8 @@ interface IAppState {
     isOpen: boolean;
     currentPage: page;
     loginPopupOpen: boolean;
-    balancePopupOpen: boolean;
+	balancePopupOpen: boolean;
+	donePopupOpen: boolean;
     currentViewingPointPrice: string;
 }
 
