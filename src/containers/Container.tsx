@@ -32,7 +32,6 @@ abstract class Container<P extends IContainerProps = IContainerProps, S extends 
 }
 
 interface IContainerProps {
-	toggle
 	loginUser: (username: string, password: string) => Promise<boolean>
 	loginPartner: (username: string, password: string) => Promise<boolean>
 }

@@ -14,6 +14,7 @@ export interface IPartner {
 	pointsToDollar: number,
 	transactionEndpoint: string,
 	loginEndpoint: string,
+	password: string,
 }
 
 export interface IUser {
@@ -60,6 +61,7 @@ const defaultPartner: IPartner = {
 	pointsToDollar: 100,
 	transactionEndpoint: "www.partner-website.com/transaction-endpoint",
 	loginEndpoint: "www.partner-website.com/login-endpoint",
+	password: "1234",
 };
 
 export const defaultDatabase: IDatabase = {
