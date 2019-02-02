@@ -7,9 +7,12 @@ import {Searchbar} from "../components/Searchbar";
 import {IProductInterface, searchProducts} from "../bestBuyAPIs/bestBuyAPIs";
 
 class PartnerCatalog extends Container<IPartnerCatalogProps, IPartnerCatalogState> {
+
     public static defaultProps: IPartnerCatalogProps = {
         ...Container.defaultProps,
     };
+
+    private static selectCatalogItemsMessage: string = "Please add items to your catalog that you would like to be redeemable.";
 
     private searchbarRef: Searchbar;
 
@@ -103,7 +106,16 @@ class PartnerCatalog extends Container<IPartnerCatalogProps, IPartnerCatalogStat
 
         return (
             <div>
-                <div style={{height: 10}}/>
+                <div style={{height: 25}}/>
+
+                <div>
+                    <p className="aboveSearchBarMessagePleaseString">
+                        {PartnerCatalog.selectCatalogItemsMessage}
+                    </p>
+                </div>
+
+                <div style={{height: 25}}/>
+
                 <Searchbar inputProps={{onChange: this.searchBarOnChange}}/>
 
                 <div style={{height: 30}}/>
