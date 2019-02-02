@@ -36,10 +36,12 @@ class CustomerCatalog extends Container<ICustomerCatalogProps, ICustomerCatalogS
 	private createProductList(paramProducts: any = {}): ReactNode[] {
 		const products: ReactNode[] = [];
 
-		console.log("3:", paramProducts);
-
 		let product: any;
 		for (product in paramProducts) {
+
+			const price: number = parseInt(paramProducts[product].price, 10);
+			const pointPrice: number = price * this.props.database.partners[this.props.partnerKey].pointsToCent * 100;
+
 			products.push(
 				<CatalogItem
 					title={paramProducts[product].name}
@@ -48,6 +50,7 @@ class CustomerCatalog extends Container<ICustomerCatalogProps, ICustomerCatalogS
 					imageURL={paramProducts[product].imageURL}
 					interfaceAsItWereFromAPIParse={paramProducts[product]}
 					radioClickCallback={this.handleProductCustomerSelection}
+					pointsPrice={pointPrice.toString()}
 					customerVersion={true}
 				/>
 			);
