@@ -6,12 +6,14 @@ class PaymentPopup extends EnhancedComponent<IPaymentPopupProps, IPaymentPopupSt
 
 	public static defaultProps: IPaymentPopupProps = {
 		...EnhancedComponent.defaultProps,
+		toggle: false,
 	};
 
 	protected constructor(props: IPaymentPopupProps) {
 		super(props);
 		this.state = {
 			...this.state,
+			toggle: this.props.toggle,
 		}
 	}
 
@@ -23,11 +25,11 @@ class PaymentPopup extends EnhancedComponent<IPaymentPopupProps, IPaymentPopupSt
 }
 
 interface IPaymentPopupProps extends IEnhancedComponentProps {
-
+	toggle: boolean;
 }
 
 interface IPaymentPopupState extends IEnhancedComponentState {
-
+	toggle: boolean;
 }
 
 export {PaymentPopup, IPaymentPopupProps, IPaymentPopupState};
