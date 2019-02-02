@@ -3,15 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
+    "@types/reactstrap": "^7.1.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts-ts": "3.1.0"
+    "react-scripts-ts": "3.1.0",
+    "reactstrap": "^7.1.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "refresh": "rm -rf node_modules/ && yarn install"
   },
   "devDependencies": {
     "@types/jest": "^23.3.13",
