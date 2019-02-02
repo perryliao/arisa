@@ -7,7 +7,7 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 
 	public static defaultProps: IPopupProps = {
 		...EnhancedComponent.defaultProps,
-		reqs: {open: false, toggleFn: () => {}, modalText: "default"},
+		reqs: {open: false, toggleFn: () => {}, modalText: "default", component: {}},
 	};
 
 	protected constructor(props: IPopupProps) {
@@ -29,7 +29,7 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 					toggle={this.props.reqs.toggleFn}
 				>
 					<ModalBody>
-						{this.props.reqs.modalText}
+						{this.props.reqs.component}
 					</ModalBody>
 					<ModalFooter>
 						<Button className=".BestBuyBlue" onClick={this.props.reqs.toggleFn}>Confirm</Button>{' '}
@@ -52,6 +52,8 @@ interface IPopupReqs {
 	toggleFn: () => void;
 	open: boolean;
 	modalText: string;
+	component: ReactNode;
+	rounded?: boolean;
 }
 
 export {Popup, IPopupProps, IPopupState, IPopupReqs};

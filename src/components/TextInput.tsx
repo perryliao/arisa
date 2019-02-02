@@ -7,7 +7,6 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
 
 	public static defaultProps: ITextInputProps = {
 		...EnhancedComponent.defaultProps,
-		callback: () => {/**/},
 	};
 
 	protected constructor(props: ITextInputProps) {
@@ -26,14 +25,14 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
 	}
 
 	private handleTextChange(event: any): void {
-		this.setState({text: event.target.value}, this.props.callback);
+		this.setState({text: event.target.value});
 	}
 
 	public render(): ReactNode {
 		return (
 			<div style={{backgroundColor: "transparent", flexDirection: "row", flex: 1, borderRadius: 25}}>
 				<label>
-					<img src={"search.png"} height={"26"}/>
+					{this.props.magGlass && <img src={"search.png"} height={"26"}/>}
 					<input
 						type={"text"}
 						value={this.state.text}
@@ -47,9 +46,7 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
 }
 
 interface ITextInputProps extends IEnhancedComponentProps {
-	title?: string;
-	width?: number;
-	callback?: () => void;
+	magGlass?: boolean;
 }
 
 interface ITextInputState extends IEnhancedComponentState {

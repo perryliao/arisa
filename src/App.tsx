@@ -9,6 +9,7 @@ import {IPopupReqs, Popup} from "./components/Popup";
 import {IProductInterface} from "./bestBuyAPIs/bestBuyAPIs";
 import {PartnerCatalog} from "./containers/PartnerCatalog";
 import {PartnerConfig} from "./containers/PartnerConfig";
+import {Login} from "./components/PopupContents/Login";
 
 enum page {
 	PartnerPortalLogin,
@@ -51,7 +52,7 @@ class App extends React.Component<IAppProps, IAppState> {
 		this.determineModalFunction = this.determineModalFunction.bind(this);
 		this.toggleLoginPopup = this.toggleLoginPopup.bind(this);
 		this.toggleBalancePopup = this.toggleBalancePopup.bind(this);
-		this.toggleLoginPopup = this.toggleLoginPopup.bind(this);
+		this.toggleProcessingPopup = this.toggleProcessingPopup.bind(this);
 		this.toggleDonePopup = this.toggleDonePopup.bind(this);
 		this.addToCatalogue = this.addToCatalogue.bind(this);
 		this.removeFromCatalogue = this.removeFromCatalogue.bind(this);
@@ -151,26 +152,31 @@ class App extends React.Component<IAppProps, IAppState> {
 				return {
 					toggleFn: this.toggleLoginPopup,
 					open: this.state.loginPopupOpen,
-					modalText: "login"
+					modalText: "login",
+					component: <Login/>
 				};
 			case PopupModalsEnum.BALANCE:
 				return {
 					toggleFn: this.toggleBalancePopup,
 					open: this.state.balancePopupOpen,
-					modalText: "balance"
+					modalText: "balance",
+					component: <Login/>,
+					rounded: true
 				};
 			case PopupModalsEnum.PROCESSING:
 				return {
 					toggleFn: this.toggleProcessingPopup,
 					open: this.state.processingPopupOpen,
-					modalText: "processing"
+					modalText: "processing",
+					component: <Login/>
 				};
 			default:
 				// default done
 				return {
 					toggleFn: this.toggleDonePopup,
 					open: this.state.donePopupOpen,
-					modalText: "DOne"
+					modalText: "DOne",
+					component: <Login/>
 				};
 		}
 	}
