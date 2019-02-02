@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /*text-align: center;*/
 }
 
 .App-logo {
@@ -38,7 +38,117 @@
   color: #ffffff;
 }
 
+div {
+  font-family: 'Roboto', sans-serif;
+}
+
+p {
+  margin-bottom: 0px;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* Catalog Stuff */
+
+.catalogItemWrapRenderOverwrite {
+  display: inline-block;
+}
+
+.productCard {
+  background-color: hsla(0, 0%, 100%, 0.5);
+  border: 1px solid hsl(0, 0%, 92%);
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px 0px hsla(0, 0%, 0%, 0.09);
+  overflow: visible;
+  display: inline-block;
+  width: 260px;
+  padding: 20px;
+  flex-direction: column;
+  margin: 15px;
+}
+
+.productCardGreen {
+  background-color: rgba(0, 255, 25, 0.15);
+  border: 1px solid #0FFF17;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px 0px hsla(0, 0%, 0%, 0.09);
+  overflow: visible;
+  display: inline-block;
+  width: 260px;
+  padding: 20px;
+  flex-direction: column;
+  margin: 15px;
+}
+
+.productCardTopRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  /*background-color: red;*/
+}
+
+.productCardCheckBoxContainer {
+  margin-right: 30px;
+}
+
+.productCardCheckBox {
+  height: 30px;
+}
+
+.productCardItemInCatalogMessage {
+  color: hsl(114, 90%, 33%);
+  /*font-family: "Roboto ", "Avenir Next Condensed", serif;*/
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 1.2;
+}
+
+.productCardProductMainImageContainer {
+  margin-top: 20px;
+  height: 200px;
+  width: 100%;
+}
+
+.productCardProductMainImage {
+  height: 100%;
+  max-width: 100%;
+}
+
+.productCardTextBlockContainer {
+  margin-top: 10px;
+}
+
+.productCardProductTitle {
+  font-weight: bold;
+  font-size: 20px;
+  color: black;
+}
+
+.productCardProductDescription {
+  font-size: 12px;
+  color: #787878;
+}
+
+.productCardPriceMessage {
+  font-size: 16px;
+  color: #787878;
+}
+
+.productCardPrice {
+  font-size: 36px;
+  color: black;
+  text-space: -1.5;
+  font-weight: 900;
+}
+
+.productCardPriceGreen {
+  font-size: 36px;
+  color: #0FFF17;
+  text-space: -1.5;
+  font-weight: 900;
 }

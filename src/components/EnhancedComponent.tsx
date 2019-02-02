@@ -9,6 +9,8 @@ abstract class EnhancedComponent<P extends IEnhancedComponentProps = IEnhancedCo
 
 	private readonly childRender: () => ReactNode;
 
+	protected wrapRenderDivClassName: string;
+
 	protected constructor(props: P) {
 		super(props);
 		// @ts-ignore
@@ -22,7 +24,7 @@ abstract class EnhancedComponent<P extends IEnhancedComponentProps = IEnhancedCo
 	private wrapRender(): void {
 		this.render = (): ReactNode => {
 			return (
-				<div>
+				<div className={this.wrapRenderDivClassName}>
 					{this.childRender()}
 				</div>
 			);

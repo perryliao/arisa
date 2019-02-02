@@ -6,6 +6,8 @@ import {defaultDatabase, IDatabase, IPartner, IUser, partnerName, userName} from
 import {IContainerProps, PopupModalsEnum} from "./containers/Container";
 import {CustomerCatalog} from "./containers/CustomerCatalog";
 import {IPopupReqs, Popup} from "./components/Popup";
+import {IProductInterface} from "./bestBuyAPIs/bestBuyAPIs";
+import {PartnerCatalog} from "./containers/PartnerCatalog";
 
 enum page {
 	PartnerPortalLogin,
@@ -22,17 +24,17 @@ class App extends React.Component<IAppProps, IAppState> {
 		partnerKey: partnerName.RBC,
 		userKey: userName.MICHELLE,
 		isOpen: true,
-		currentPage: page.PartnerPortalLogin,
 		loginPopupOpen: false,
 		balancePopupOpen: false,
 		processingPopupOpen: false,
 		donePopupOpen: false,
+		currentPage: page.PartnerCatalogueSettings,
 	};
 
 	private static pages: {[key: string]: {pointer: any, name: string}} = {
 		[page.PartnerPortalLogin]: {pointer: CustomerCatalog, name: "Partner Login"},
 		[page.PartnerPortalSettings]: {pointer: CustomerCatalog, name: "Partner Settings"},
-		[page.PartnerCatalogueSettings]: {pointer: CustomerCatalog, name: "Partner Catalogue"},
+		[page.PartnerCatalogueSettings]: {pointer: PartnerCatalog, name: "Partner Catalogue"},
 		[page.UserPortalLogin]: {pointer: CustomerCatalog, name: "User Login"},
 		[page.UserPortalStore]: {pointer: CustomerCatalog, name: "User Store"},
 	};
@@ -50,6 +52,8 @@ class App extends React.Component<IAppProps, IAppState> {
 		this.toggleBalancePopup = this.toggleBalancePopup.bind(this);
 		this.toggleLoginPopup = this.toggleLoginPopup.bind(this);
 		this.toggleDonePopup = this.toggleDonePopup.bind(this);
+		this.addToCatalogue = this.addToCatalogue.bind(this);
+		this.removeFromCatalogue = this.removeFromCatalogue.bind(this);
 	}
 
 	private toggle(): void {
@@ -76,6 +80,26 @@ class App extends React.Component<IAppProps, IAppState> {
 			that.setState({userKey: username as userName}, resolve);
 		});
 		return success;
+	}
+
+	private async addToCatalogue(product: IProductInterface): Promise<void> {
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		database.partners[this.state.partnerKey].catalogue[product.id] = product;
+		await new Promise((resolve: () => void) => {
+			this.setState({database}, resolve)
+		});
+	}
+
+	private async removeFromCatalogue(product: IProductInterface): Promise<void> {
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		try {
+			delete database.partners[this.state.partnerKey].catalogue[product.id];
+			await new Promise((resolve: () => void) => {
+				this.setState({database}, resolve)
+			});
+		} catch (err) {
+
+		}
 	}
 
 	private async loginPartner(username: string, password: string): Promise<boolean> {
@@ -109,7 +133,12 @@ class App extends React.Component<IAppProps, IAppState> {
 		const props: IContainerProps = {
 			loginUser: this.loginUser,
 			loginPartner: this.loginPartner,
-			modalFunction: this.determineModalFunction
+			modalFunction: this.determineModalFunction,
+			addToCatalogue: this.addToCatalogue,
+			removeFromCatalogue: this.removeFromCatalogue,
+			database: this.state.database,
+			partnerKey: this.state.partnerKey,
+			userKey: this.state.userKey
 		};
 		return React.createElement(App.pages[this.state.currentPage].pointer, props);
 	}

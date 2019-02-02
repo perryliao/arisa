@@ -1,6 +1,8 @@
 import * as React from "react";
 import {ReactNode} from "react";
 import {IPopupReqs, Popup} from "../components/Popup";
+import {IProductInterface} from "../bestBuyAPIs/bestBuyAPIs";
+import {IDatabase, partnerName, userName} from "../data/database";
 
 abstract class Container<P extends IContainerProps = IContainerProps, S extends IContainerState = IContainerState> extends React.PureComponent<P, S> {
 	public static defaultProps: IContainerProps = {
@@ -23,12 +25,8 @@ abstract class Container<P extends IContainerProps = IContainerProps, S extends 
 	}
 	private wrapRender(): void {
 		this.render = (): ReactNode => {
-			const test = this.props.modalFunction(PopupModalsEnum.LOGIN);
 			return (
 				<div>
-					<p onClick={test.toggleFn}>
-						Click me
-					</p>
 					<div>
 						{this.childRender()}
 					</div>
@@ -42,6 +40,11 @@ interface IContainerProps {
 	loginUser?: (username: string, password: string) => Promise<boolean>;
 	loginPartner?: (username: string, password: string) => Promise<boolean>;
 	modalFunction?: (key: PopupModalsEnum) => IPopupReqs;
+	addToCatalogue?: (product: IProductInterface) => Promise<void>,
+	removeFromCatalogue?: (product: IProductInterface) => Promise<void>,
+	database?: IDatabase,
+	partnerKey?: partnerName,
+	userKey?: userName,
 }
 
 interface IContainerState {

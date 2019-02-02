@@ -1,3 +1,5 @@
+import {IProductInterface} from "../bestBuyAPIs/bestBuyAPIs";
+
 export interface IDatabase {
 	partners: {
 		[key: string] : IPartner
@@ -7,7 +9,7 @@ export interface IDatabase {
 export interface IPartner {
 	name: string
 	users: {[key: string]: IUser},
-	catalogue: {[key: string]: any},
+	catalogue: {[key: string]: IProductInterface},
 	logo: string,
 	primaryColour: string,
 	secondaryColour: string,
@@ -49,7 +51,7 @@ const defaultUsers: {[key: string]: IUser} = {
 	[userName.JERRY]: defaultUser,
 };
 
-const defaultCatalogue: any = {};
+const defaultCatalogue: {[key: string]: IProductInterface} = {};
 
 const defaultPartner: IPartner = {
 	name: partnerName.RBC,
