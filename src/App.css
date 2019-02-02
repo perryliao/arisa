@@ -203,12 +203,16 @@ p {
   max-width: 500px;
   min-width: 300px;
   align-self: center;
-  padding: 10px 20px;
+  padding: 30px 40px;
 }
 
 
 .partnerConfigFormSection {
   margin-top: 20px
+}
+
+.partnerConfigFormTitleTextContainer {
+  margin-bottom: 10px;
 }
 
 .partnerConfigFormTitleText {
@@ -225,8 +229,31 @@ p {
   border-radius: 31px;
   box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.25);
   overflow: visible;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
+}
+
+.partnerConfigFormTextInputContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.partnerConfigFormConversionRateText {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.partnerConfigFormTextInputRowWrapperForMargins {
+  margin-top: 10px;
+}
+
+.convertedCentsToDollarsPointDisplay {
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
 }
 
 /* Text Input */
@@ -239,4 +266,17 @@ p {
   color: #222222;
   font-size: 28px;
   width: 100%;
+}
+
+/* Jerry Button */
+
+.jerryButton {
+  background-color: #003B64;
+  border: 1px solid hsl(0, 13%, 78%);
+  border-radius: 31px;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.25);
+  overflow: visible;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 0.1em;;
 }

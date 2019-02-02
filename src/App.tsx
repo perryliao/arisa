@@ -31,7 +31,6 @@ class App extends React.Component<IAppProps, IAppState> {
 		balancePopupOpen: false,
 		processingPopupOpen: false,
 		donePopupOpen: false,
-		currentPage: page.PartnerCatalogueSettings,
 	};
 
 	private static pages: {[key: string]: {pointer: any, name: string}} = {

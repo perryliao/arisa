@@ -2,6 +2,8 @@ import * as React from "react";
 import {ReactNode} from "react";
 import {EnhancedComponent, IEnhancedComponentProps, IEnhancedComponentState} from "./EnhancedComponent";
 import {ColoredCircle} from "./ColoredCircle";
+import {TextInput} from "./TextInput";
+import {Button} from "reactstrap";
 
 class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPartnerConfigFormState> {
 
@@ -30,7 +32,21 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
         super(props);
         this.state = {
             ...this.state,
+            primaryColor: null,
+            pointAmountPerDollar: 1231,
         };
+        this.onPointChange = this.onPointChange.bind(this);
+    }
+
+    private onPointChange(newPoints: number): void {
+        if (typeof newPoints !== "number") {
+            return;
+        }
+
+        this.setState({
+            pointAmountPerCent: newPoints.toString(),
+            pointAmountPerDollar: newPoints * 100
+        });
     }
 
     public render(): ReactNode {
@@ -41,58 +57,119 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
 
 
                     <div className="partnerConfigFormSection">
-                        <div>
+                        <div className="partnerConfigFormTitleTextContainer">
                             <p className="partnerConfigFormTitleText">
                                 {PartnerConfigForm.setColorsTitle}
                             </p>
                         </div>
-                        <div>
-                            <ColoredCircle/>
+                        <div className="partnerConfigFormTextInputRowWrapperForMargins">
+                            <div className="partnerConfigFormTextInputContainer">
+                                <div style={{width: "80%"}}>
+                                    <TextInput/>
+                                </div>
+                                <div style={{width: "5%"}}/>
+                                <div style={{width: "10%"}}>
+                                    <ColoredCircle
+                                        circleColor={this.state.primaryColor}
+                                    />
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <ColoredCircle/>
+                        <div className="partnerConfigFormTextInputRowWrapperForMargins">
+                            <div className="partnerConfigFormTextInputContainer">
+                                <div style={{width: "80%"}}>
+                                    <TextInput/>
+                                </div>
+                                <div style={{width: "5%"}}/>
+                                <div style={{width: "10%"}}>
+                                    <ColoredCircle
+                                        circleColor={this.state.secondaryColor}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
 
 
                     <div className="partnerConfigFormSection">
-                        <div>
+                        <div className="partnerConfigFormTitleTextContainer">
                             <p className="partnerConfigFormTitleText">
                                 {PartnerConfigForm.setPointExchangeTitle}
                             </p>
                         </div>
+                        <div className="partnerConfigFormTextInputRowWrapperForMargins">
+                            <div className="partnerConfigFormTextInputContainer">
+                                <div style={{width: "30%"}}>
+                                    <p className="partnerConfigFormConversionRateText">
+                                        {PartnerConfigForm.centConversionMessage}
+                                    </p>
+                                </div>
+                                <div style={{width: "5%"}}/>
+                                <div style={{width: "60%"}}>
+                                    <TextInput/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="partnerConfigFormTextInputRowWrapperForMargins">
+                            <div className="partnerConfigFormTextInputContainer">
+                                <div style={{width: "30%"}}>
+                                    <p className="partnerConfigFormConversionRateText">
+                                        {PartnerConfigForm.dollarConversionMessage}
+                                    </p>
+                                </div>
+                                <div style={{width: "5%"}}/>
+                                <div style={{width: "60%"}}>
+                                    <p className="convertedCentsToDollarsPointDisplay">
+                                        {this.state.pointAmountPerDollar}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 
                     <div className="partnerConfigFormSection">
-                        <div>
+                        <div className="partnerConfigFormTitleTextContainer">
                             <p className="partnerConfigFormTitleText">
                                 {PartnerConfigForm.setAPIEndpointTitle}
                             </p>
                         </div>
+                        <div className="partnerConfigFormTextInputRowWrapperForMargins">
+                            <TextInput/>
+                        </div>
                     </div>
 
 
                     <div className="partnerConfigFormSection">
-                        <div>
+                        <div className="partnerConfigFormTitleTextContainer">
                             <p className="partnerConfigFormTitleText">
                                 {PartnerConfigForm.setTransactionEndpointTitle}
                             </p>
                         </div>
-                    </div>
-
-
-                    <div className="partnerConfigFormSection">
-                        <div>
-                            <p className="partnerConfigFormTitleText">
-                                {PartnerConfigForm.setLoginEndpointTitle}
-                            </p>
+                        <div className="partnerConfigFormTextInputRowWrapperForMargins">
+                            <TextInput/>
                         </div>
                     </div>
 
 
                     <div className="partnerConfigFormSection">
+                        <div className="partnerConfigFormTitleTextContainer">
+                            <p className="partnerConfigFormTitleText">
+                                {PartnerConfigForm.setLoginEndpointTitle}
+                            </p>
+                        </div>
+                        <div className="partnerConfigFormTextInputRowWrapperForMargins">
+                            <TextInput/>
+                        </div>
+                    </div>
 
+
+                    <div className="partnerConfigFormSection">
+                        <div className="partnerConfigFormTextInputContainer">
+                            <Button className="jerryButton">
+                                {PartnerConfigForm.buttonText}
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
