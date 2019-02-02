@@ -4,6 +4,9 @@ import {EnhancedComponent, IEnhancedComponentProps, IEnhancedComponentState} fro
 import {ColoredCircle} from "./ColoredCircle";
 import {TextInput} from "./TextInput";
 import {Button} from "reactstrap";
+import {IDatabase, IPartner, IPartnerOptions} from "../data/database";
+import {IContainerProps} from "../containers/Container";
+import {page} from "../App";
 
 class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPartnerConfigFormState> {
 
@@ -30,18 +33,32 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
 
     protected constructor(props: IPartnerConfigFormProps) {
         super(props);
+        const partner: IPartner = props.database.partners[this.props.partnerKey];
         this.state = {
             ...this.state,
-            primaryColor: null,
-            secondaryColor: null,
-            pointAmountPerDollar: 0,
+            primaryColor: partner.primaryColour,
+            secondaryColor: partner.secondaryColour,
+            pointAmountPerDollar: partner.pointsToCent * 100,
+            pointAmountPerCent: partner.pointsToCent,
             apiEndpoint: "",
-            transactionEndpoint: "",
-            loginEndpoint: "",
+            transactionEndpoint: partner.transactionEndpoint,
+            loginEndpoint: partner.loginEndpoint,
         };
         this.handleColorChange = this.handleColorChange.bind(this);
         this.onPointChange = this.onPointChange.bind(this);
         this.handleGenericTextInputChange = this.handleGenericTextInputChange.bind(this);
+        this.onClick = this.onClick.bind(this);
+    }
+
+    private onClick(): void {
+        const that: PartnerConfigForm = this;
+        this.props.editPartnerOptions({
+            primaryColour: this.state.primaryColor,
+            secondaryColour: this.state.secondaryColor,
+            pointsToCent: this.state.pointAmountPerCent,
+            transactionEndpoint: this.state.transactionEndpoint,
+            loginEndpoint: this.state.loginEndpoint,
+        }).then(that.props.changePage(page.PartnerCatalogueSettings));
     }
 
     private handleColorChange(whichInput: any): (newColor: string) => void {
@@ -61,7 +78,7 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
         console.log("new points:", newPoints);
 
         this.setState({
-            pointAmountPerCent: newPoints.toString(),
+            pointAmountPerCent: newPoints,
             pointAmountPerDollar: newPoints * 100
         });
     }
@@ -100,8 +117,10 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
                                     <TextInput
                                         inputProps={{
                                             // @ts-ignore
-                                            onChange: this.handleColorChange("primary")
+                                            onChange: this.handleColorChange("primary"),
+                                            value: this.state.primaryColor,
                                         }}
+
                                     />
                                 </div>
                                 <div style={{width: "5%"}}/>
@@ -118,7 +137,8 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
                                     <TextInput
                                         inputProps={{
                                             // @ts-ignore
-                                            onChange: this.handleColorChange("secondary")
+                                            onChange: this.handleColorChange("secondary"),
+                                            value: this.state.secondaryColor,
                                         }}
                                     />
                                 </div>
@@ -152,6 +172,7 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
                                         inputProps={{
                                             // @ts-ignore
                                             onChange: this.onPointChange,
+                                            value: this.state.pointAmountPerCent,
                                         }}
                                     />
                                 </div>
@@ -175,39 +196,21 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
                     </div>
 
 
-                    <div className="partnerConfigFormSection">
-                        <div className="partnerConfigFormTitleTextContainer">
-                            <p className="partnerConfigFormTitleText">
-                                {PartnerConfigForm.setAPIEndpointTitle}
-                            </p>
-                        </div>
-                        <div className="partnerConfigFormTextInputRowWrapperForMargins">
-                            <TextInput
-                                inputProps={{
-                                    // @ts-ignore
-                                    onChange: this.handleGenericTextInputChange("apiEndpoint")
-                                }}
-                            />
-                        </div>
-                    </div>
-
-
-                    <div className="partnerConfigFormSection">
-                        <div className="partnerConfigFormTitleTextContainer">
-                            <p className="partnerConfigFormTitleText">
-                                {PartnerConfigForm.setTransactionEndpointTitle}
-                            </p>
-                        </div>
-                        <div className="partnerConfigFormTextInputRowWrapperForMargins">
-                            <TextInput
-                                inputProps={{
-                                    // @ts-ignore
-                                    onChange: this.handleGenericTextInputChange("transactionEndpoint")
-                                }}
-                            />
-                        </div>
-                    </div>
-
+                    {/*<div className="partnerConfigFormSection">*/}
+                        {/*<div className="partnerConfigFormTitleTextContainer">*/}
+                            {/*<p className="partnerConfigFormTitleText">*/}
+                                {/*{PartnerConfigForm.setAPIEndpointTitle}*/}
+                            {/*</p>*/}
+                        {/*</div>*/}
+                        {/*<div className="partnerConfigFormTextInputRowWrapperForMargins">*/}
+                            {/*<TextInput*/}
+                                {/*inputProps={{*/}
+                                    {/*// @ts-ignore*/}
+                                    {/*onChange: this.handleGenericTextInputChange("apiEndpoint")*/}
+                                {/*}}*/}
+                            {/*/>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
 
                     <div className="partnerConfigFormSection">
                         <div className="partnerConfigFormTitleTextContainer">
@@ -219,7 +222,25 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
                             <TextInput
                                 inputProps={{
                                     // @ts-ignore
-                                    onChange: this.handleGenericTextInputChange("loginEndpoint")
+                                    onChange: this.handleGenericTextInputChange("loginEndpoint"),
+                                    value: this.state.loginEndpoint
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="partnerConfigFormSection">
+                        <div className="partnerConfigFormTitleTextContainer">
+                            <p className="partnerConfigFormTitleText">
+                                {PartnerConfigForm.setTransactionEndpointTitle}
+                            </p>
+                        </div>
+                        <div className="partnerConfigFormTextInputRowWrapperForMargins">
+                            <TextInput
+                                inputProps={{
+                                    // @ts-ignore
+                                    onChange: this.handleGenericTextInputChange("transactionEndpoint"),
+                                    value: this.state.transactionEndpoint
                                 }}
                             />
                         </div>
@@ -228,7 +249,7 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
 
                     <div className="partnerConfigFormSection">
                         <div className="partnerConfigFormTextInputContainer">
-                            <Button className="jerryButton">
+                            <Button className="jerryButton" onClick={this.onClick}>
                                 {PartnerConfigForm.buttonText}
                             </Button>
                         </div>
@@ -239,13 +260,14 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
     }
 }
 
-interface IPartnerConfigFormProps extends IEnhancedComponentProps {
+interface IPartnerConfigFormProps extends IContainerProps {
+
 }
 
 interface IPartnerConfigFormState extends IEnhancedComponentState {
     primaryColor: string;
     secondaryColor: string;
-    pointAmountPerCent: string;
+    pointAmountPerCent: number;
     pointAmountPerDollar: number;
     apiEndpoint: string;
     transactionEndpoint: string;

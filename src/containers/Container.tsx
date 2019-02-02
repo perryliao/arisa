@@ -48,6 +48,7 @@ interface IContainerProps {
 	partnerKey?: partnerName,
 	userKey?: userName,
 	catalogueLength?: number;
+	changePage?: (page: any) => () => void;
 }
 
 interface IContainerState {

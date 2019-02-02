@@ -12,7 +12,7 @@ import {PartnerConfig} from "./containers/PartnerConfig";
 import {Login} from "./components/PopupContents/Login";
 import {Balance} from "./components/PopupContents/Balance";
 
-enum page {
+export enum page {
     PartnerPortalLogin,
     PartnerPortalSettings,
     PartnerCatalogueSettings,
@@ -161,11 +161,13 @@ class App extends React.Component<IAppProps, IAppState> {
             modalFunction: this.determineModalFunction,
             addToCatalogue: this.addToCatalogue,
             removeFromCatalogue: this.removeFromCatalogue,
+            editPartnerOptions: this.editPartnerOptions,
             database: this.state.database,
             partnerKey: this.state.partnerKey,
             userKey: this.state.userKey,
             catalogueLength: Object.keys(this.state.database.partners[this.state.partnerKey].catalogue).length,
             makeTransaction: this.makeTransaction,
+            changePage: this.changePage,
         };
         return React.createElement(App.pages[this.state.currentPage].pointer, props);
     }
