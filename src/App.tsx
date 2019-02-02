@@ -9,10 +9,11 @@ import {
 	NavItem,
 	NavLink,
 } from "reactstrap";
-import {defaultDatabase, IDatabase, IPartner, IUser, partnerName, userName} from "./data/database";
+import {defaultDatabase, IDatabase, IPartner, IPartnerOptions, IUser, partnerName, userName} from "./data/database";
 import {ReactNode} from "react";
 import {IContainerProps} from "./containers/Container";
 import {CustomerCatalog} from "./containers/CustomerCatalog";
+import {IProductInterface} from "./bestBuyAPIs/bestBuyAPIs";
 
 enum page {
 	PartnerPortalLogin,
@@ -48,6 +49,9 @@ class App extends React.Component<IAppProps, IAppState> {
 		this.changePage = this.changePage.bind(this);
 		this.createNavLinks = this.createNavLinks.bind(this);
 		this.determinePage = this.determinePage.bind(this);
+		this.addToCatalogue = this.determinePage.bind(this);
+		this.removeFromCatalogue = this.removeFromCatalogue.bind(this);
+		this.editPartnerOptions = this.editPartnerOptions.bind(this);
 	}
 
 	private toggle(): void {
@@ -76,6 +80,39 @@ class App extends React.Component<IAppProps, IAppState> {
 		return success;
 	}
 
+	private async addToCatalogue(product: IProductInterface): Promise<void> {
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		database.partners[this.state.partnerKey].catalogue[product.id] = product;
+		await new Promise((resolve: () => void) => {
+			this.setState({database}, resolve)
+		});
+	}
+
+	private async removeFromCatalogue(product: IProductInterface): Promise<void> {
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		try {
+			delete database.partners[this.state.partnerKey].catalogue[product.id];
+			await new Promise((resolve: () => void) => {
+				this.setState({database}, resolve)
+			});
+		} catch (err) {
+
+		}
+	}
+
+	private async makeTransaction(points: number): Promise<boolean> {
+		const user: IUser = this.state.database.partners[this.state.partnerKey].users[this.state.userKey];
+		if (points > user.balance) {
+			return false;
+		}
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		database.partners[this.state.partnerKey].users[this.state.userKey].balance -= points;
+		await new Promise((resolve: () => void) => {
+			this.setState({database}, resolve)
+		});
+		return true;
+	}
+
 	private async loginPartner(username: string, password: string): Promise<boolean> {
 		const partner: IPartner = this.state.database.partners[username];
 		const success: boolean = !(partner === undefined || partner.password !== password);
@@ -87,6 +124,17 @@ class App extends React.Component<IAppProps, IAppState> {
 			that.setState({partnerKey: username as partnerName}, resolve);
 		});
 		return !(partner === undefined || partner.password !== password);
+	}
+
+	private async editPartnerOptions(partnerOptions: IPartnerOptions): Promise<void> {
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		database.partners[this.state.partnerKey] = {
+			...database.partners[this.state.partnerKey],
+			...partnerOptions,
+		};
+		await new Promise((resolve: () => void) => {
+			this.setState({database}, resolve)
+		});
 	}
 
 	private createNavLinks(pageKey: any): ReactNode {
@@ -107,6 +155,12 @@ class App extends React.Component<IAppProps, IAppState> {
 		const props: IContainerProps = {
 			loginUser: this.loginUser,
 			loginPartner: this.loginPartner,
+			addToCatalogue: this.addToCatalogue,
+			removeFromCatalogue: this.removeFromCatalogue,
+			makeTransaction: this.makeTransaction,
+			database: this.state.database,
+			partnerKey: this.state.partnerKey,
+			userKey: this.state.userKey,
 		};
 		return React.createElement(App.pages[this.state.currentPage].pointer, props);
 	}

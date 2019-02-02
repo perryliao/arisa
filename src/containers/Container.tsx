@@ -1,5 +1,7 @@
 import * as React from "react";
 import {ReactNode} from "react";
+import {IProductInterface} from "../bestBuyAPIs/bestBuyAPIs";
+import {IDatabase, IPartnerOptions, partnerName, userName} from "../data/database";
 
 abstract class Container<P extends IContainerProps = IContainerProps, S extends IContainerState = IContainerState> extends React.PureComponent<P, S> {
 	public static defaultProps: IContainerProps = {
@@ -34,8 +36,15 @@ abstract class Container<P extends IContainerProps = IContainerProps, S extends 
 }
 
 interface IContainerProps {
-	loginUser?: (username: string, password: string) => Promise<boolean>
-	loginPartner?: (username: string, password: string) => Promise<boolean>
+	loginUser?: (username: string, password: string) => Promise<boolean>,
+	loginPartner?: (username: string, password: string) => Promise<boolean>,
+	addToCatalogue?: (product: IProductInterface) => Promise<void>,
+	removeFromCatalogue?: (product: IProductInterface) => Promise<void>,
+	makeTransaction?: (points: number) => Promise<boolean>,
+	editPartnerOptions?: (partnerOptions: IPartnerOptions) => Promise<void>,
+	database?: IDatabase,
+	partnerKey?: partnerName,
+	userKey?: userName,
 }
 
 interface IContainerState {

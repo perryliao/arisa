@@ -1,20 +1,25 @@
+import {IProductInterface} from "../bestBuyAPIs/bestBuyAPIs";
+
 export interface IDatabase {
 	partners: {
 		[key: string] : IPartner
 	}
 }
 
-export interface IPartner {
-	name: string
-	users: {[key: string]: IUser},
-	catalogue: {[key: string]: any},
-	logo: string,
+export interface IPartnerOptions {
 	primaryColour: string,
 	secondaryColour: string,
 	pointsToDollar: number,
 	transactionEndpoint: string,
 	loginEndpoint: string,
+}
+
+export interface IPartner extends IPartnerOptions {
+	users: {[key: string]: IUser},
+	catalogue: {[key: string]: IProductInterface},
 	password: string,
+	name: string,
+	logo: string,
 }
 
 export interface IUser {
@@ -49,7 +54,7 @@ const defaultUsers: {[key: string]: IUser} = {
 	[userName.JERRY]: defaultUser,
 };
 
-const defaultCatalogue: any = {};
+const defaultCatalogue: {[key: string]: IProductInterface} = {};
 
 const defaultPartner: IPartner = {
 	name: partnerName.RBC,
