@@ -6,17 +6,20 @@ export interface IDatabase {
 	}
 }
 
-export interface IPartner {
-	name: string
-	users: {[key: string]: IUser},
-	catalogue: {[key: string]: IProductInterface},
-	logo: string,
+export interface IPartnerOptions {
 	primaryColour: string,
 	secondaryColour: string,
-	pointsToDollar: number,
+	pointsToCent: number,
 	transactionEndpoint: string,
 	loginEndpoint: string,
+}
+
+export interface IPartner extends IPartnerOptions {
+	users: {[key: string]: IUser},
+	catalogue: {[key: string]: IProductInterface},
 	password: string,
+	name: string,
+	logo: string,
 }
 
 export interface IUser {
@@ -60,7 +63,7 @@ const defaultPartner: IPartner = {
 	logo: "/logo.svg",
 	primaryColour: "#002aff",
 	secondaryColour: "#ffbc06",
-	pointsToDollar: 100,
+	pointsToCent: 1,
 	transactionEndpoint: "www.partner-website.com/transaction-endpoint",
 	loginEndpoint: "www.partner-website.com/login-endpoint",
 	password: "1234",

@@ -41,6 +41,10 @@ class CustomerCatalog extends Container<ICustomerCatalogProps, ICustomerCatalogS
 
 		let product: any;
 		for (product in paramProducts) {
+
+			const price: number = parseInt(paramProducts[product].price, 10);
+			const pointPrice: number = price * this.props.database.partners[this.props.partnerKey].pointsToCent * 100;
+
 			products.push(
 				<CatalogItem
 					title={paramProducts[product].name}
@@ -49,6 +53,7 @@ class CustomerCatalog extends Container<ICustomerCatalogProps, ICustomerCatalogS
 					imageURL={paramProducts[product].imageURL}
 					interfaceAsItWereFromAPIParse={paramProducts[product]}
 					radioClickCallback={this.handleProductCustomerSelection}
+					pointsPrice={pointPrice.toString()}
 					customerVersion={true}
 				/>
 			);
@@ -58,15 +63,32 @@ class CustomerCatalog extends Container<ICustomerCatalogProps, ICustomerCatalogS
 	}
 
 	private handleProductCustomerSelection(props: ICatalogItemProps, dumbVariableFromBadCodeDontUse: boolean): void {
-		this.props.modalFunction(PopupModalsEnum.LOGIN).toggleFn();
+
 		// console.log("props:", props);
+		// console.log("props:", props.pointsPrice);
+		this.props.updateCurrentViewingPointPrice(props.pointsPrice);
+
+		// TODO prompt pop up
+		this.props.modalFunction(PopupModalsEnum.LOGIN).toggleFn();
 	}
 
 	public render(): ReactNode {
+
+		const products: ReactNode[] = this.createProductList(this.state.products);
+
+
 		return (
 			<div>
-				<Button onClick={this.props.modalFunction(PopupModalsEnum.LOGIN).toggleFn}>LOGIN</Button>{' '}
-				<Button onClick={this.props.modalFunction(PopupModalsEnum.BALANCE).toggleFn}>BALANCE</Button>{' '}
+				<div>
+					<div style={{height: 10}}/>
+
+					<div style={{height: 30}}/>
+
+					<div style={{verticalAlign: "top"}}>
+						{products}
+					</div>
+
+				</div>
 			</div>
 		);
 	}
@@ -77,7 +99,7 @@ interface ICustomerCatalogProps extends IContainerProps {
 }
 
 interface ICustomerCatalogState extends IContainerState {
-
+	products: any;
 }
 
 export {CustomerCatalog, ICustomerCatalogProps, ICustomerCatalogState};

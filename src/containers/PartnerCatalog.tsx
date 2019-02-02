@@ -50,6 +50,12 @@ class PartnerCatalog extends Container<IPartnerCatalogProps, IPartnerCatalogStat
 
         let product: any;
         for (product in paramProducts) {
+            console.log("product:", paramProducts[product]);
+
+            const price: number = parseInt(paramProducts[product].price, 10);
+            const pointPrice: number = price * this.props.database.partners[this.props.partnerKey].pointsToCent * 100;
+
+
             products.push(
                 <CatalogItem
                     title={paramProducts[product].name}
@@ -58,6 +64,7 @@ class PartnerCatalog extends Container<IPartnerCatalogProps, IPartnerCatalogStat
                     imageURL={paramProducts[product].imageURL}
                     interfaceAsItWereFromAPIParse={paramProducts[product]}
                     radioClickCallback={this.addProductToCatalog}
+                    pointsPrice={pointPrice.toString()}
                 />
             );
         }

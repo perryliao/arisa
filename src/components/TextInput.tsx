@@ -17,22 +17,17 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
             text: "",
         };
 
-        this.getText = this.getText.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
-    }
-
-    public getText(): string {
-        return this.state.text;
     }
 
     private handleTextChange(event: any): void {
         // @ts-ignore
-        this.setState({text: event.target.value}, () => {
+        // this.setState({text: event.target.value}, () => {
             if (this.props.inputProps && this.props.inputProps.onChange) {
                 // @ts-ignore
-                this.props.inputProps.onChange(this.state.text)
+                this.props.inputProps.onChange(event.target.value)
             }
-        });
+        // });
     }
 
     public render(): ReactNode {
@@ -41,7 +36,6 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
                 <input
                     {...this.props.inputProps}
                     type={this.props.secureText ? "password" : "text"}
-                    value={this.state.text}
                     onChange={this.handleTextChange}
                     className={"TextInput"}
                     placeholder={this.props.placeholder}
@@ -58,7 +52,6 @@ interface ITextInputProps extends IEnhancedComponentProps {
 }
 
 interface ITextInputState extends IEnhancedComponentState {
-    text: string;
 }
 
 export {TextInput, ITextInputState, ITextInputProps};

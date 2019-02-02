@@ -12,8 +12,8 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 		...EnhancedComponent.defaultProps,
 	};
 
-	private nameRef: TextInput;
-	private passwordRef: TextInput;
+	private name: string;
+	private password: string;
 
 	protected constructor(props: ILoginProps) {
 		super(props);
@@ -22,8 +22,8 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 		};
 
 		this.handleLogin = this.handleLogin.bind(this);
-		this.saveNameRef = this.saveNameRef.bind(this);
-		this.savePasswordRef = this.savePasswordRef.bind(this);
+		this.saveName = this.saveName.bind(this);
+		this.savePassword = this.savePassword.bind(this);
 	}
 
 	private handleLogin(callback: () => void): () => void {
@@ -33,25 +33,24 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 			if (!attempt) {
 				// retry login
 				console.log(attempt);
-				if (this.nameRef && this.passwordRef && this.props.login) {
-					this.props.login(this.nameRef.getText(), this.passwordRef.getText())
+				if (this.name && this.password && this.props.login) {
+					console.log(this.name, this.password);
+					this.props.login(this.name, this.password)
 						.then((res: any) => {
-							console.log(res);
-						}).catch((err: any) => {
-							console.log(err);
-					})
+							attempt = !res;
+						})
 				}
 			}
 			callback();
 		});
 	}
 
-	private saveNameRef(ref: TextInput): void {
-		this.nameRef = ref;
+	private saveName(event: any): void {
+		this.name = event;
 	}
 
-	private savePasswordRef(ref: TextInput): void {
-		this.passwordRef = ref;
+	private savePassword(event: any): void {
+		this.password = event;
 	}
 
 	public render(): ReactNode {
@@ -59,8 +58,8 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 			<div className={"CenterAllColumn"}>
 				<img src={"rbc_icon.png"}/>
 				<p className={"BestBuyBlack popupHeaderText"}>Login to RBC</p>
-				<TextInput ref={this.saveNameRef} placeholder={"Name"}/>
-				<TextInput ref={this.savePasswordRef} placeholder={"Password"} secureText={true}/>
+				<TextInput inputProps={{onChange: this.saveName}} placeholder={"Name"}/>
+				<TextInput inputProps={{onChange: this.savePassword}} placeholder={"Password"} secureText={true}/>
 				<div style={{height: 15}}/>
 				<Button className={"jerryButton"} onClick={this.handleLogin(this.props.onClick)} >Login</Button>{' '}
 			</div>

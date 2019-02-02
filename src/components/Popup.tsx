@@ -45,8 +45,8 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 }
 
 interface IPopupProps extends IEnhancedComponentProps {
-	reqs: IPopupReqs;
-	modalClassName: string;
+	reqs?: IPopupReqs;
+	modalClassName?: string;
 }
 
 interface IPopupState extends IEnhancedComponentState {
