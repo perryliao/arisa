@@ -15,8 +15,6 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 		this.state = {
 			...this.state,
 		};
-
-		// this.toggleModal = this.toggleModal.bind(this);
 	}
 
 	public componentWillReceiveProps(nextProps: any): void {
@@ -24,7 +22,6 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 	}
 
 	public render(): ReactNode {
-
 		return (
 			<div>
 				<Modal
