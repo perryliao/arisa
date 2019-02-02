@@ -23,7 +23,7 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 		return (
 			<div className={"CenterAllColumn"}>
 				<img src={"rbc_icon.png"}/>
-				<p className={"popupHeaderText"}>Login to RBC</p>
+				<p className={"BestBuyBlack popupHeaderText"}>Login to RBC</p>
 				<TextInput placeholder={"Name"}/>
 				<TextInput placeholder={"Password"} secureText={true}/>
 				<div style={{height: 15}}/>

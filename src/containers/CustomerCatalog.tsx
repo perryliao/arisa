@@ -20,8 +20,6 @@ class CustomerCatalog extends Container<ICustomerCatalogProps, ICustomerCatalogS
 			<div>
 				<Button onClick={this.props.modalFunction(PopupModalsEnum.LOGIN).toggleFn}>LOGIN</Button>{' '}
 				<Button onClick={this.props.modalFunction(PopupModalsEnum.BALANCE).toggleFn}>BALANCE</Button>{' '}
-				<Button onClick={this.props.modalFunction(PopupModalsEnum.PROCESSING).toggleFn}>PROCESSING</Button>{' '}
-				<Button onClick={this.props.modalFunction(PopupModalsEnum.DONE).toggleFn}>DONE</Button>{' '}
 			</div>
 		);
 	}

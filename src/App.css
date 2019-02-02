@@ -317,3 +317,37 @@ p {
   align-items: center;
   justify-content: center;
 }
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.alignRight {
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  text-align: right;
+}
+
+/*Popups*/
+
+.loginPopup {
+  background-color: rgba(255, 255, 255, 0.92);
+  border-radius: 15px;
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.25);
+  overflow: visible;
+}
+
+.balancePopup {
+  background-color: rgba(255, 255, 255, 0.92);
+  border-radius: 15px;
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.25);
+  overflow: visible;
+}

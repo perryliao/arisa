@@ -30,8 +30,6 @@ class App extends React.Component<IAppProps, IAppState> {
         currentPage: page.UserPortalLogin,
         loginPopupOpen: false,
         balancePopupOpen: false,
-        processingPopupOpen: false,
-        donePopupOpen: false,
     };
 
     private static pages: { [key: string]: { pointer: any, name: string } } = {
@@ -53,8 +51,6 @@ class App extends React.Component<IAppProps, IAppState> {
         this.determineModalFunction = this.determineModalFunction.bind(this);
         this.toggleLoginPopup = this.toggleLoginPopup.bind(this);
         this.toggleBalancePopup = this.toggleBalancePopup.bind(this);
-        this.toggleProcessingPopup = this.toggleProcessingPopup.bind(this);
-        this.toggleDonePopup = this.toggleDonePopup.bind(this);
         this.addToCatalogue = this.addToCatalogue.bind(this);
         this.removeFromCatalogue = this.removeFromCatalogue.bind(this);
     }
@@ -149,51 +145,28 @@ class App extends React.Component<IAppProps, IAppState> {
     private determineModalFunction(key: PopupModalsEnum): IPopupReqs {
         switch (key) {
             case PopupModalsEnum.LOGIN:
-                // open payment
+                // open login
                 return {
                     toggleFn: this.toggleLoginPopup,
                     open: this.state.loginPopupOpen,
                     component: <Login onClick={this.toggleLoginPopup}/>
                 };
-            case PopupModalsEnum.BALANCE:
+            default:
                 return {
                     toggleFn: this.toggleBalancePopup,
                     open: this.state.balancePopupOpen,
                     component: <Balance onClick={this.toggleBalancePopup} addedPoints={25252}/>,
                     rounded: true
                 };
-            case PopupModalsEnum.PROCESSING:
-                return {
-                    toggleFn: this.toggleProcessingPopup,
-                    open: this.state.processingPopupOpen,
-                    component: <Login/>
-                };
-            default:
-                // default done
-                return {
-                    toggleFn: this.toggleDonePopup,
-                    open: this.state.donePopupOpen,
-                    component: <Login/>
-                };
         }
     }
 
     private toggleLoginPopup(): void {
-        this.setState({loginPopupOpen: !this.state.loginPopupOpen}, () => {
-            console.log("login popup clicked");
-        });
+        this.setState({loginPopupOpen: !this.state.loginPopupOpen});
     }
 
     private toggleBalancePopup(): void {
         this.setState({balancePopupOpen: !this.state.balancePopupOpen});
-    }
-
-    private toggleProcessingPopup(): void {
-        this.setState({processingPopupOpen: !this.state.processingPopupOpen});
-    }
-
-    private toggleDonePopup(): void {
-        this.setState({donePopupOpen: !this.state.donePopupOpen});
     }
 
     public render() {
@@ -213,12 +186,9 @@ class App extends React.Component<IAppProps, IAppState> {
                     </Collapse>
                 </Navbar>
                 <div className="container">
-                    {this.state.loginPopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.LOGIN)}/>}
+                    {this.state.loginPopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.LOGIN)} modalClassName={"loginPopup"}/>}
                     {this.state.balancePopupOpen &&
-                    <Popup reqs={this.determineModalFunction(PopupModalsEnum.BALANCE)}/>}
-                    {this.state.processingPopupOpen &&
-                    <Popup reqs={this.determineModalFunction(PopupModalsEnum.PROCESSING)}/>}
-                    {this.state.donePopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.DONE)}/>}
+                    <Popup reqs={this.determineModalFunction(PopupModalsEnum.BALANCE)} modalClassName={"balancePopup"}/>}
                     {this.determinePage()}
                 </div>
             </div>
@@ -238,8 +208,6 @@ interface IAppState {
     currentPage: page;
     loginPopupOpen: boolean;
     balancePopupOpen: boolean;
-    processingPopupOpen: boolean;
-    donePopupOpen: boolean;
 }
 
 export default App;

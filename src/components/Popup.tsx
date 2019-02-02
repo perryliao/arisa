@@ -8,6 +8,7 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 	public static defaultProps: IPopupProps = {
 		...EnhancedComponent.defaultProps,
 		reqs: {open: false, toggleFn: () => {}, component: {}},
+		modalClassName: "",
 	};
 
 	protected constructor(props: IPopupProps) {
@@ -27,6 +28,7 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 				<Modal
 					isOpen={this.props.reqs.open}
 					toggle={this.props.reqs.toggleFn}
+					className={this.props.modalClassName}
 				>
 					<ModalBody>
 						{this.props.reqs.component}
@@ -43,6 +45,7 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 
 interface IPopupProps extends IEnhancedComponentProps {
 	reqs: IPopupReqs;
+	modalClassName: string;
 }
 
 interface IPopupState extends IEnhancedComponentState {
