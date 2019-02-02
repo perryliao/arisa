@@ -20,19 +20,23 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 
 	public render(): ReactNode {
 		return (
-			<div>
+			<div style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 				<img src={"rbc_icon.png"}/>
-				<h1>Login to RBC</h1>
-				<TextInput/>
-				<TextInput/>
-				<Button>Login</Button>{' '}
+				<div className={"popupHeaderText"}>Login to RBC</div>
+				<TextInput placeholder={"Name"} inputProps={{
+					// @ts-ignore
+					onChange: (value: string) => {
+						console.log(value + "this consolew")
+					}}}/>
+				<TextInput placeholder={"Password"}/>
+				<Button onClick={this.props.onClick} >Login</Button>{' '}
 			</div>
 		);
 	}
 }
 
 interface ILoginProps extends IEnhancedComponentProps {
-
+	onClick?: () => void;
 }
 
 interface ILoginState extends IEnhancedComponentState {

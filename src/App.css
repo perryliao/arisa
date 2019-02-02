@@ -259,12 +259,11 @@ p {
 /* Text Input */
 
 .TextInput {
-  outline-style: none;
-  border: 1px solid transparent;
-  border-bottom-color: #222222;
   background-color: transparent;
   color: #222222;
-  font-size: 28px;
+  border-radius: 25px;
+  padding-left: 10px;
+  font-size: 16px;
   width: 100%;
 }
 
@@ -279,4 +278,13 @@ p {
   color: white;
   font-size: 18px;
   letter-spacing: 0.1em;;
+}
+
+.popupHeaderText {
+  color: hsl(0, 0%, 26%);
+  font-family: "AvenirNextCondensed-Bold", "Avenir Next Condensed", serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
 }
