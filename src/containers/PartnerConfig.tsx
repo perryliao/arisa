@@ -1,6 +1,7 @@
 import * as React from "react";
 import {ReactNode} from "react";
 import {Container, IContainerProps, IContainerState} from "./Container";
+import {PartnerConfigForm} from "../components/PartnerConfigForm";
 
 class PartnerConfig extends Container<IPartnerConfigProps, IPartnerConfigState> {
 	public static defaultProps: IPartnerConfigProps = {
@@ -16,7 +17,10 @@ class PartnerConfig extends Container<IPartnerConfigProps, IPartnerConfigState> 
 
 	public render(): ReactNode {
 		return (
-			<div/>
+			<div className="partnerConfigPageBackground">
+				<div style={{height: 40}}/>
+				<PartnerConfigForm/>
+			</div>
 		);
 	}
 }
