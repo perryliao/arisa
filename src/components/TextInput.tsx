@@ -38,7 +38,6 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
     public render(): ReactNode {
         return (
             <div style={{backgroundColor: "transparent", flexDirection: "row", flex: 1}}>
-                {this.props.magGlass && <img src={"search.png"} height={"26"}/>}
                 <input
                     {...this.props.inputProps}
                     type={this.props.secureText ? "password" : "text"}
@@ -53,7 +52,6 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
 }
 
 interface ITextInputProps extends IEnhancedComponentProps {
-    magGlass?: boolean;
     placeholder?: string;
     inputProps?: React.InputHTMLAttributes<any>;
     secureText?: boolean;
