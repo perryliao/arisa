@@ -33,12 +33,16 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 				.then((res: boolean) => {
 					if (res) {
 						this.props.onClick();
-						this.props.balancePopupFn();
+						if (this.props.balancePopupFn) {
+							this.props.balancePopupFn();
+						}
 					} else {
 						// login failed
 						alert("Wrong credentials, please try again.")
 					}
 				})
+		} else {
+			alert("Please complete all fields.")
 		}
 	}
 
