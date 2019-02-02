@@ -152,3 +152,12 @@ p {
   text-space: -1.5;
   font-weight: 900;
 }
+
+.TextInput {
+  outline-style: none;
+  border: 1px solid transparent;
+  border-bottom-color: #222222;
+  background-color: transparent;
+  color: #222222;
+  font-size: 28px;
+}

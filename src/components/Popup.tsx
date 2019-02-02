@@ -32,7 +32,7 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 						{this.props.reqs.modalText}
 					</ModalBody>
 					<ModalFooter>
-						<Button color="primary" onClick={this.props.reqs.toggleFn}>Confirm</Button>{' '}
+						<Button className=".BestBuyBlue" onClick={this.props.reqs.toggleFn}>Confirm</Button>{' '}
 						<Button color="secondary" onClick={this.props.reqs.toggleFn}>Cancel</Button>
 					</ModalFooter>
 				</Modal>

@@ -8,6 +8,7 @@ import {CustomerCatalog} from "./containers/CustomerCatalog";
 import {IPopupReqs, Popup} from "./components/Popup";
 import {IProductInterface} from "./bestBuyAPIs/bestBuyAPIs";
 import {PartnerCatalog} from "./containers/PartnerCatalog";
+import {PartnerConfig} from "./containers/PartnerConfig";
 
 enum page {
 	PartnerPortalLogin,
@@ -33,7 +34,7 @@ class App extends React.Component<IAppProps, IAppState> {
 
 	private static pages: {[key: string]: {pointer: any, name: string}} = {
 		[page.PartnerPortalLogin]: {pointer: CustomerCatalog, name: "Partner Login"},
-		[page.PartnerPortalSettings]: {pointer: CustomerCatalog, name: "Partner Settings"},
+		[page.PartnerPortalSettings]: {pointer: PartnerConfig, name: "Partner Settings"},
 		[page.PartnerCatalogueSettings]: {pointer: PartnerCatalog, name: "Partner Catalogue"},
 		[page.UserPortalLogin]: {pointer: CustomerCatalog, name: "User Login"},
 		[page.UserPortalStore]: {pointer: CustomerCatalog, name: "User Store"},
