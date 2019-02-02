@@ -3,10 +3,9 @@ import * as ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
-import {Sandbox} from "./containers/Testscreens/Sandbox";
 
 ReactDOM.render(
-  <Sandbox />,
+  <App />,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();

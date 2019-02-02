@@ -1,17 +1,9 @@
 import * as React from 'react';
+import {ReactNode} from 'react';
 import './App.css';
-import {
-	Collapse,
-	Nav,
-	Navbar,
-	NavbarToggler,
-	NavbarBrand,
-	NavItem,
-	NavLink,
-} from "reactstrap";
+import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,} from "reactstrap";
 import {defaultDatabase, IDatabase, IPartner, IUser, partnerName, userName} from "./data/database";
-import {ReactNode} from "react";
-import {IContainerProps} from "./containers/Container";
+import {IContainerProps, PopupModalsEnum} from "./containers/Container";
 import {CustomerCatalog} from "./containers/CustomerCatalog";
 
 enum page {
@@ -30,6 +22,10 @@ class App extends React.Component<IAppProps, IAppState> {
 		userKey: userName.MICHELLE,
 		isOpen: true,
 		currentPage: page.PartnerPortalLogin,
+		loginPopupOpen: false,
+		balancePopupOpen: false,
+		processingPopupOpen: false,
+		donePopupOpen: false,
 	};
 
 	private static pages: {[key: string]: {pointer: any, name: string}} = {
@@ -48,6 +44,7 @@ class App extends React.Component<IAppProps, IAppState> {
 		this.changePage = this.changePage.bind(this);
 		this.createNavLinks = this.createNavLinks.bind(this);
 		this.determinePage = this.determinePage.bind(this);
+		this.determineModalFunction = this.determineModalFunction.bind(this);
 	}
 
 	private toggle(): void {
@@ -107,8 +104,42 @@ class App extends React.Component<IAppProps, IAppState> {
 		const props: IContainerProps = {
 			loginUser: this.loginUser,
 			loginPartner: this.loginPartner,
+			modalFunction: this.determineModalFunction
 		};
 		return React.createElement(App.pages[this.state.currentPage].pointer, props);
+	}
+
+	private determineModalFunction(key: PopupModalsEnum): () => void {
+		switch(key) {
+			case PopupModalsEnum.LOGIN:
+				// open payment
+				return this.toggleLoginPopup;
+			case PopupModalsEnum.BALANCE:
+				return this.toggleBalancePopup;
+			case PopupModalsEnum.PROCESSING:
+				return this.toggleProcessingPopup;
+			case PopupModalsEnum.DONE:
+				return this.toggleDonePopup;
+			default:
+				// never come here
+				return this.toggleDonePopup;
+		}
+	}
+
+	private toggleLoginPopup(): void {
+		this.setState({loginPopupOpen: !this.state.loginPopupOpen});
+	}
+
+	private toggleBalancePopup(): void {
+		this.setState({balancePopupOpen: !this.state.balancePopupOpen});
+	}
+
+	private toggleProcessingPopup(): void {
+		this.setState({processingPopupOpen: !this.state.processingPopupOpen});
+	}
+
+	private toggleDonePopup(): void {
+		this.setState({donePopupOpen: !this.state.donePopupOpen});
 	}
 
 	public render() {
@@ -145,6 +176,10 @@ interface IAppState {
 	userKey: userName,
 	isOpen: boolean;
 	currentPage: page;
+	loginPopupOpen: boolean;
+	balancePopupOpen: boolean;
+	processingPopupOpen: boolean;
+	donePopupOpen: boolean;
 }
 
 export default App;
