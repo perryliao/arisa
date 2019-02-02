@@ -1,13 +1,13 @@
 import * as React from "react";
 import {ReactNode} from "react";
 import {EnhancedComponent, IEnhancedComponentProps, IEnhancedComponentState} from "./EnhancedComponent";
-import {Modal, ModalBody} from "reactstrap";
+import {Button, Modal, ModalBody, ModalFooter} from "reactstrap";
 
 class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 
 	public static defaultProps: IPopupProps = {
 		...EnhancedComponent.defaultProps,
-		toggleFn: () => {/**/},
+		reqs: {open: false, toggleFn: () => {}},
 	};
 
 	protected constructor(props: IPopupProps) {
@@ -19,16 +19,25 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 		// this.toggleModal = this.toggleModal.bind(this);
 	}
 
+	public componentWillReceiveProps(nextProps: any): void {
+		console.log(nextProps);
+	}
+
 	public render(): ReactNode {
+
 		return (
 			<div>
-				<Modal>
-					<ModalBody
-						isOpen={true}
-						toggle={this.props.toggleFn}
-					>
+				<Modal
+					isOpen={this.props.reqs.open}
+					toggle={this.props.reqs.toggleFn}
+				>
+					<ModalBody>
 						asdf
 					</ModalBody>
+					<ModalFooter>
+						<Button color="primary" onClick={this.props.reqs.toggleFn}>Do Something</Button>{' '}
+						<Button color="secondary" onClick={this.props.reqs.toggleFn}>Cancel</Button>
+					</ModalFooter>
 				</Modal>
 			</div>
 		);
@@ -36,10 +45,15 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 }
 
 interface IPopupProps extends IEnhancedComponentProps {
-	toggleFn: () => void;
+	reqs: IPopupReqs;
 }
 
 interface IPopupState extends IEnhancedComponentState {
 }
 
-export {Popup, IPopupProps, IPopupState};
+interface IPopupReqs {
+	toggleFn: () => void;
+	open: boolean;
+}
+
+export {Popup, IPopupProps, IPopupState, IPopupReqs};

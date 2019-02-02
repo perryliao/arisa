@@ -5,6 +5,7 @@ import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,} fr
 import {defaultDatabase, IDatabase, IPartner, IUser, partnerName, userName} from "./data/database";
 import {IContainerProps, PopupModalsEnum} from "./containers/Container";
 import {CustomerCatalog} from "./containers/CustomerCatalog";
+import {IPopupReqs, Popup} from "./components/Popup";
 
 enum page {
 	PartnerPortalLogin,
@@ -45,6 +46,10 @@ class App extends React.Component<IAppProps, IAppState> {
 		this.createNavLinks = this.createNavLinks.bind(this);
 		this.determinePage = this.determinePage.bind(this);
 		this.determineModalFunction = this.determineModalFunction.bind(this);
+		this.toggleLoginPopup = this.toggleLoginPopup.bind(this);
+		this.toggleBalancePopup = this.toggleBalancePopup.bind(this);
+		this.toggleLoginPopup = this.toggleLoginPopup.bind(this);
+		this.toggleDonePopup = this.toggleDonePopup.bind(this);
 	}
 
 	private toggle(): void {
@@ -109,25 +114,27 @@ class App extends React.Component<IAppProps, IAppState> {
 		return React.createElement(App.pages[this.state.currentPage].pointer, props);
 	}
 
-	private determineModalFunction(key: PopupModalsEnum): () => void {
+	private determineModalFunction(key: PopupModalsEnum): IPopupReqs {
 		switch(key) {
 			case PopupModalsEnum.LOGIN:
 				// open payment
-				return this.toggleLoginPopup;
+				return {toggleFn: this.toggleLoginPopup, open: this.state.loginPopupOpen};
 			case PopupModalsEnum.BALANCE:
-				return this.toggleBalancePopup;
+				return {toggleFn: this.toggleBalancePopup, open: this.state.balancePopupOpen};
 			case PopupModalsEnum.PROCESSING:
-				return this.toggleProcessingPopup;
+				return {toggleFn: this.toggleProcessingPopup, open: this.state.processingPopupOpen};
 			case PopupModalsEnum.DONE:
-				return this.toggleDonePopup;
+				return {toggleFn: this.toggleDonePopup, open: this.state.donePopupOpen};
 			default:
 				// never come here
-				return this.toggleDonePopup;
+				return {toggleFn: this.toggleDonePopup, open: this.state.donePopupOpen};
 		}
 	}
 
 	private toggleLoginPopup(): void {
-		this.setState({loginPopupOpen: !this.state.loginPopupOpen});
+		this.setState({loginPopupOpen: !this.state.loginPopupOpen}, () => {
+			console.log("login popup clicked");
+		});
 	}
 
 	private toggleBalancePopup(): void {
@@ -159,6 +166,7 @@ class App extends React.Component<IAppProps, IAppState> {
 					</Collapse>
 				</Navbar>
 				<div className="container">
+					<Popup reqs={this.determineModalFunction(PopupModalsEnum.LOGIN)}/>
 					{this.determinePage()}
 				</div>
 			</div>

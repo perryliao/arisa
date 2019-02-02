@@ -1,6 +1,6 @@
 import * as React from "react";
 import {ReactNode} from "react";
-import {Popup} from "../components/Popup";
+import {IPopupReqs, Popup} from "../components/Popup";
 
 abstract class Container<P extends IContainerProps = IContainerProps, S extends IContainerState = IContainerState> extends React.PureComponent<P, S> {
 	public static defaultProps: IContainerProps = {
@@ -23,9 +23,12 @@ abstract class Container<P extends IContainerProps = IContainerProps, S extends 
 	}
 	private wrapRender(): void {
 		this.render = (): ReactNode => {
+			const test = this.props.modalFunction(PopupModalsEnum.LOGIN);
 			return (
 				<div>
-					<Popup toggleFn={this.props.modalFunction(PopupModalsEnum.LOGIN)}/>
+					<p onClick={test.toggleFn}>
+						Click me
+					</p>
 					<div>
 						{this.childRender()}
 					</div>
@@ -38,7 +41,7 @@ abstract class Container<P extends IContainerProps = IContainerProps, S extends 
 interface IContainerProps {
 	loginUser?: (username: string, password: string) => Promise<boolean>;
 	loginPartner?: (username: string, password: string) => Promise<boolean>;
-	modalFunction?: (key: PopupModalsEnum) => () => void;
+	modalFunction?: (key: PopupModalsEnum) => IPopupReqs;
 }
 
 interface IContainerState {
