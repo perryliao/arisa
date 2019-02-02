@@ -25,23 +25,22 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
 	}
 
 	private handleTextChange(event: any): void {
-		this.setState({text: event.target.value});
+		// @ts-ignore
+		this.setState({text: event.target.value}, this.props.inputProps.onChange(this.state.text));
 	}
 
 	public render(): ReactNode {
 		return (
-			<div style={{backgroundColor: "transparent", flexDirection: "row", flex: 1, borderRadius: 25}}>
-				<label>
-					{this.props.magGlass && <img src={"search.png"} height={"26"}/>}
-					<input
-						type={"text"}
-						value={this.state.text}
-						onChange={this.handleTextChange}
-						className={"TextInput"}
-						style={{width: "100%"}}
-						placeholder={this.props.placeholder}
-					/>
-				</label>
+			<div style={{backgroundColor: "transparent", flexDirection: "row", flex: 1}}>
+				{this.props.magGlass && <img src={"search.png"} height={"26"}/>}
+				<input
+					{...this.props.inputProps}
+					type={"text"}
+					value={this.state.text}
+					onChange={this.handleTextChange}
+					className={"TextInput"}
+					placeholder={this.props.placeholder}
+				/>
 			</div>
 		);
 	}
@@ -50,6 +49,7 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
 interface ITextInputProps extends IEnhancedComponentProps {
 	magGlass?: boolean;
 	placeholder?: string;
+	inputProps?: React.InputHTMLAttributes<any>;
 }
 
 interface ITextInputState extends IEnhancedComponentState {

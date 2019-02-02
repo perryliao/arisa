@@ -153,22 +153,19 @@ class App extends React.Component<IAppProps, IAppState> {
 				return {
 					toggleFn: this.toggleLoginPopup,
 					open: this.state.loginPopupOpen,
-					modalText: "login",
 					component: <Login onClick={this.toggleLoginPopup}/>
 				};
 			case PopupModalsEnum.BALANCE:
 				return {
 					toggleFn: this.toggleBalancePopup,
 					open: this.state.balancePopupOpen,
-					modalText: "balance",
-					component: <Balance onClick={this.toggleBalancePopup}/>,
+					component: <Balance onClick={this.toggleBalancePopup} addedPoints={25252}/>,
 					rounded: true
 				};
 			case PopupModalsEnum.PROCESSING:
 				return {
 					toggleFn: this.toggleProcessingPopup,
 					open: this.state.processingPopupOpen,
-					modalText: "processing",
 					component: <Login/>
 				};
 			default:
@@ -176,7 +173,6 @@ class App extends React.Component<IAppProps, IAppState> {
 				return {
 					toggleFn: this.toggleDonePopup,
 					open: this.state.donePopupOpen,
-					modalText: "DOne",
 					component: <Login/>
 				};
 		}

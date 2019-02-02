@@ -7,7 +7,7 @@ class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 
 	public static defaultProps: IPopupProps = {
 		...EnhancedComponent.defaultProps,
-		reqs: {open: false, toggleFn: () => {}, modalText: "default", component: {}},
+		reqs: {open: false, toggleFn: () => {}, component: {}},
 	};
 
 	protected constructor(props: IPopupProps) {
@@ -51,7 +51,6 @@ interface IPopupState extends IEnhancedComponentState {
 interface IPopupReqs {
 	toggleFn: () => void;
 	open: boolean;
-	modalText: string;
 	component: ReactNode;
 	rounded?: boolean;
 }
