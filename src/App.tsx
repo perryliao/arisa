@@ -2,7 +2,7 @@ import * as React from 'react';
 import {ReactNode} from 'react';
 import './App.css';
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,} from "reactstrap";
-import {defaultDatabase, IDatabase, IPartner, IUser, partnerName, userName} from "./data/database";
+import {defaultDatabase, IDatabase, IPartner, IPartnerOptions, IUser, partnerName, userName} from "./data/database";
 import {IContainerProps, PopupModalsEnum} from "./containers/Container";
 import {CustomerCatalog} from "./containers/CustomerCatalog";
 import {IPopupReqs, Popup} from "./components/Popup";
@@ -153,7 +153,7 @@ class App extends React.Component<IAppProps, IAppState> {
 		)
 	}
 
-			
+
     private determinePage(): ReactNode {
         const props: IContainerProps = {
             loginUser: this.loginUser,
