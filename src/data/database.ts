@@ -9,7 +9,7 @@ export interface IDatabase {
 export interface IPartnerOptions {
 	primaryColour: string,
 	secondaryColour: string,
-	pointsToDollar: number,
+	pointsToCent: number,
 	transactionEndpoint: string,
 	loginEndpoint: string,
 }
@@ -36,7 +36,7 @@ export enum userName {
 }
 
 export enum partnerName {
-	RBC = "Royal Bank of Canada",
+	RBC = "RBC",
 	TD = "TD Canada",
 	SCOTIABANK = "Scotiabank",
 }
@@ -61,9 +61,9 @@ const defaultPartner: IPartner = {
 	users: defaultUsers,
 	catalogue: defaultCatalogue,
 	logo: "/logo.svg",
-	primaryColour: "#002aff",
+	primaryColour: "#0e2324",
 	secondaryColour: "#ffbc06",
-	pointsToDollar: 100,
+	pointsToCent: 1,
 	transactionEndpoint: "www.partner-website.com/transaction-endpoint",
 	loginEndpoint: "www.partner-website.com/login-endpoint",
 	password: "1234",
