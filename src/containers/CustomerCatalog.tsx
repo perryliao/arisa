@@ -9,6 +9,8 @@ class CustomerCatalog extends Container<ICustomerCatalogProps, ICustomerCatalogS
 		...Container.defaultProps,
 	};
 
+	private static selectItemToRedeemWithPoints: string = "Please choose an item to redeem for your points.";
+
 	protected constructor(props: ICustomerCatalogProps) {
 		super(props);
 		this.state = {
@@ -80,9 +82,15 @@ class CustomerCatalog extends Container<ICustomerCatalogProps, ICustomerCatalogS
 		return (
 			<div>
 				<div>
-					<div style={{height: 10}}/>
+					<div style={{height: 25}}/>
 
-					<div style={{height: 30}}/>
+					<div>
+						<p className="aboveSearchBarMessagePleaseString">
+							{CustomerCatalog.selectItemToRedeemWithPoints}
+						</p>
+					</div>
+
+					<div style={{height: 25}}/>
 
 					<div style={{verticalAlign: "top"}}>
 						{products}

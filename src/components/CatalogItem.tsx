@@ -17,6 +17,7 @@ class CatalogItem extends EnhancedComponent<ICatalogItemProps, ICatalogItemState
         interfaceAsItWereFromAPIParse: null,
         radioClickCallback: () => {},
         customerVersion: false,
+        catalog: {},
     };
 
     private static selectedMessage: string = "ITEM IN CATALOG";
@@ -54,13 +55,16 @@ class CatalogItem extends EnhancedComponent<ICatalogItemProps, ICatalogItemState
     }
 
     public render(): ReactNode {
+
+        const selected: boolean = this.props.catalog[this.props.interfaceAsItWereFromAPIParse.id] !== undefined;
+
         return (
-            <div className={this.state.selected ? "productCardGreen" : "productCard"} style={{flex: 1}}>
+            <div className={selected ? "productCardGreen" : "productCard"} style={{flex: 1}}>
 
                 {!this.props.customerVersion ?
                     <div>
                         {
-                            this.state.selected ?
+                            selected ?
                             <div className="productCardTopRow">
                                 <div className="productCardCheckBoxContainer">
                                     <img
@@ -112,7 +116,7 @@ class CatalogItem extends EnhancedComponent<ICatalogItemProps, ICatalogItemState
                             </p>
                         </div>
                         <div>
-                            <p className={this.state.selected ? "productCardPriceGreen" : "productCardPrice"}>
+                            <p className={selected ? "productCardPriceGreen" : "productCardPrice"}>
                                 {"$" + this.props.bestBuyPrice}
                             </p>
                         </div>
@@ -126,7 +130,7 @@ class CatalogItem extends EnhancedComponent<ICatalogItemProps, ICatalogItemState
                         </p>
                     </div>
                     <div>
-                        <p className={this.state.selected ? "productCardPriceGreen" : "productCardPrice"}>
+                        <p className={selected ? "productCardPriceGreen" : "productCardPrice"}>
                             {this.props.pointsPrice}
                         </p>
                     </div>
@@ -154,6 +158,7 @@ interface ICatalogItemProps extends IEnhancedComponentProps {
     radioClickCallback: (props: ICatalogItemProps, selected: boolean) => void;
     interfaceAsItWereFromAPIParse: IProductInterface;
     customerVersion: boolean;
+    catalog: {[key: string]: IProductInterface};
 }
 
 interface ICatalogItemState extends IEnhancedComponentState {
