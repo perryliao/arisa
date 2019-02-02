@@ -23,12 +23,14 @@ class Balance extends EnhancedComponent<IBalanceProps, IBalanceState> {
 	public render(): ReactNode {
 		return (
 			<div>
-				<h2>Balance</h2>
-				<p>{this.props.myPoints.toString() + " Pts"}</p>
-				<p>{"-" + this.props.addedPoints.toString() + " Pts"}</p>
-				<p>______________________________</p>
-				<p>{(this.props.myPoints - this.props.addedPoints).toString() + " Pts"}</p>
-				<p>remaining</p>
+				<p className={"popupHeaderText"}>Balance</p>
+				<div style={{alignItems: "flex-start"}}>
+					<p style={{fontWeight: 500}}>{"   " + this.props.myPoints.toString() + " Pts"}</p>
+					<p>{"-" + this.props.addedPoints.toString() + " Pts"}</p>
+					<hr/>
+					<p style={{fontWeight: 500}}>{"   " + (this.props.myPoints - this.props.addedPoints).toString() + " Pts"}</p>
+					<p style={{fontSize: 8}}> remaining</p>
+				</div>
 			</div>
 		);
 	}

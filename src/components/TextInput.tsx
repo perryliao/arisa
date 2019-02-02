@@ -7,6 +7,7 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
 
     public static defaultProps: ITextInputProps = {
         ...EnhancedComponent.defaultProps,
+		secureText: false,
     };
 
     protected constructor(props: ITextInputProps) {
@@ -40,7 +41,7 @@ class TextInput extends EnhancedComponent<ITextInputProps, ITextInputState> {
                 {this.props.magGlass && <img src={"search.png"} height={"26"}/>}
                 <input
                     {...this.props.inputProps}
-                    type={"text"}
+                    type={this.props.secureText ? "password" : "text"}
                     value={this.state.text}
                     onChange={this.handleTextChange}
                     className={"TextInput"}
@@ -55,6 +56,7 @@ interface ITextInputProps extends IEnhancedComponentProps {
     magGlass?: boolean;
     placeholder?: string;
     inputProps?: React.InputHTMLAttributes<any>;
+    secureText?: boolean;
 }
 
 interface ITextInputState extends IEnhancedComponentState {

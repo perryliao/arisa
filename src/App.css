@@ -261,14 +261,18 @@ p {
 .TextInput {
   outline-style: none;
   background-color: transparent;
-  border-color: #7a7a7a2e;
-  border-radius: 25px;
-  padding-left: 10px;
+  border: 1px solid hsl(0, 13%, 78%);
+  border-radius: 31px;
+  padding-left: 20px;
+  padding-right: 16px;
   width: 100%;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.25);
+  overflow: visible;
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 0.4px;
-  line-height: 1.2;
+  line-height: 1.4;
+  margin: 5px;
 }
 
 .TextInput::placeholder {
@@ -292,8 +296,24 @@ p {
 .popupHeaderText {
   color: hsl(0, 0%, 26%);
   /*font-family: "AvenirNextCondensed-Bold", "Avenir Next Condensed", serif;*/
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1.2;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.CenterAllRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.CenterAllColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

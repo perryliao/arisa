@@ -21,16 +21,13 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 
 	public render(): ReactNode {
 		return (
-			<div style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+			<div className={"CenterAllColumn"}>
 				<img src={"rbc_icon.png"}/>
 				<p className={"popupHeaderText"}>Login to RBC</p>
-				<TextInput placeholder={"Name"} inputProps={{
-					// @ts-ignore
-					onChange: (value: string) => {
-						console.log(value + "this consolew")
-					}}}/>
-				<TextInput placeholder={"Password"}/>
-				<Button onClick={this.props.onClick} >Login</Button>{' '}
+				<TextInput placeholder={"Name"}/>
+				<TextInput placeholder={"Password"} secureText={true}/>
+				<div style={{height: 15}}/>
+				<Button className={"jerryButton"} onClick={this.props.onClick} >Login</Button>{' '}
 			</div>
 		);
 	}
