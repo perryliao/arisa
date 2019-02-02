@@ -15,7 +15,7 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
     private static setPointExchangeTitle: string = "Set point exchange rate";
     private static setAPIEndpointTitle: string = "Set API endpoint";
     private static setTransactionEndpointTitle: string = "Set transaction endpoint";
-    private static setLoginEndpointTitle: string = "Set transaction endpoint";
+    private static setLoginEndpointTitle: string = "Set login endpoint";
     private static buttonText: string = "Submit";
 
     private static centConversionMessage: string = "$0.01 CAD =";
@@ -33,20 +33,52 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
         this.state = {
             ...this.state,
             primaryColor: null,
-            pointAmountPerDollar: 1231,
+            secondaryColor: null,
+            pointAmountPerDollar: 0,
+            apiEndpoint: "",
+            transactionEndpoint: "",
+            loginEndpoint: "",
         };
+        this.handleColorChange = this.handleColorChange.bind(this);
         this.onPointChange = this.onPointChange.bind(this);
+        this.handleGenericTextInputChange = this.handleGenericTextInputChange.bind(this);
+    }
+
+    private handleColorChange(whichInput: any): (newColor: string) => void {
+        const that: PartnerConfigForm = this;
+
+        return (newColor: string): void => {
+            // console.log("which input:", whichInput, "newColor:", newColor);
+
+            that.setState({
+                primaryColor: whichInput === "primary" ? newColor : that.state.primaryColor,
+                secondaryColor: whichInput === "secondary" ? newColor : that.state.secondaryColor,
+            })
+        }
     }
 
     private onPointChange(newPoints: number): void {
-        if (typeof newPoints !== "number") {
-            return;
-        }
+        console.log("new points:", newPoints);
 
         this.setState({
             pointAmountPerCent: newPoints.toString(),
             pointAmountPerDollar: newPoints * 100
         });
+    }
+
+    private handleGenericTextInputChange(input: string): (newValue: string) => void {
+        const that: PartnerConfigForm = this;
+
+        return (newValue: string): void => {
+            console.log("input:", input, "value:", newValue);
+
+            // @ts-ignore
+            const newState: IPartnerConfigFormState = {...that.state, [input]: newValue};
+
+            that.setState(newState, () => {
+                console.log("STATE:", that.state);
+            })
+        }
     }
 
     public render(): ReactNode {
@@ -65,7 +97,12 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
                         <div className="partnerConfigFormTextInputRowWrapperForMargins">
                             <div className="partnerConfigFormTextInputContainer">
                                 <div style={{width: "80%"}}>
-                                    <TextInput/>
+                                    <TextInput
+                                        inputProps={{
+                                            // @ts-ignore
+                                            onChange: this.handleColorChange("primary")
+                                        }}
+                                    />
                                 </div>
                                 <div style={{width: "5%"}}/>
                                 <div style={{width: "10%"}}>
@@ -78,7 +115,12 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
                         <div className="partnerConfigFormTextInputRowWrapperForMargins">
                             <div className="partnerConfigFormTextInputContainer">
                                 <div style={{width: "80%"}}>
-                                    <TextInput/>
+                                    <TextInput
+                                        inputProps={{
+                                            // @ts-ignore
+                                            onChange: this.handleColorChange("secondary")
+                                        }}
+                                    />
                                 </div>
                                 <div style={{width: "5%"}}/>
                                 <div style={{width: "10%"}}>
@@ -99,26 +141,31 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
                         </div>
                         <div className="partnerConfigFormTextInputRowWrapperForMargins">
                             <div className="partnerConfigFormTextInputContainer">
-                                <div style={{width: "30%"}}>
+                                <div style={{width: "40%"}}>
                                     <p className="partnerConfigFormConversionRateText">
                                         {PartnerConfigForm.centConversionMessage}
                                     </p>
                                 </div>
                                 <div style={{width: "5%"}}/>
-                                <div style={{width: "60%"}}>
-                                    <TextInput/>
+                                <div style={{width: "50%"}}>
+                                    <TextInput
+                                        inputProps={{
+                                            // @ts-ignore
+                                            onChange: this.onPointChange,
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>
                         <div className="partnerConfigFormTextInputRowWrapperForMargins">
                             <div className="partnerConfigFormTextInputContainer">
-                                <div style={{width: "30%"}}>
+                                <div style={{width: "40%"}}>
                                     <p className="partnerConfigFormConversionRateText">
                                         {PartnerConfigForm.dollarConversionMessage}
                                     </p>
                                 </div>
                                 <div style={{width: "5%"}}/>
-                                <div style={{width: "60%"}}>
+                                <div style={{width: "50%"}}>
                                     <p className="convertedCentsToDollarsPointDisplay">
                                         {this.state.pointAmountPerDollar}
                                     </p>
@@ -135,7 +182,12 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
                             </p>
                         </div>
                         <div className="partnerConfigFormTextInputRowWrapperForMargins">
-                            <TextInput/>
+                            <TextInput
+                                inputProps={{
+                                    // @ts-ignore
+                                    onChange: this.handleGenericTextInputChange("apiEndpoint")
+                                }}
+                            />
                         </div>
                     </div>
 
@@ -147,7 +199,12 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
                             </p>
                         </div>
                         <div className="partnerConfigFormTextInputRowWrapperForMargins">
-                            <TextInput/>
+                            <TextInput
+                                inputProps={{
+                                    // @ts-ignore
+                                    onChange: this.handleGenericTextInputChange("transactionEndpoint")
+                                }}
+                            />
                         </div>
                     </div>
 
@@ -159,7 +216,12 @@ class PartnerConfigForm extends EnhancedComponent<IPartnerConfigFormProps, IPart
                             </p>
                         </div>
                         <div className="partnerConfigFormTextInputRowWrapperForMargins">
-                            <TextInput/>
+                            <TextInput
+                                inputProps={{
+                                    // @ts-ignore
+                                    onChange: this.handleGenericTextInputChange("loginEndpoint")
+                                }}
+                            />
                         </div>
                     </div>
 
