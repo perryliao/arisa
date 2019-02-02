@@ -9,7 +9,7 @@ class CustomerCatalog extends Container<ICustomerCatalogProps, ICustomerCatalogS
 		...Container.defaultProps,
 	};
 
-	private static selectItemToRedeemWithPoints: string = "Please choose an item to redeem for your points.";
+	private static selectItemToRedeemWithPoints: string = "Please choose an item to redeem with your points.";
 
 	protected constructor(props: ICustomerCatalogProps) {
 		super(props);
