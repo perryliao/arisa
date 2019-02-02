@@ -9,7 +9,7 @@ import {
 	NavItem,
 	NavLink,
 } from "reactstrap";
-import {defaultDatabase, IDatabase, IPartner, IUser, partnerName, userName} from "./data/database";
+import {defaultDatabase, IDatabase, IPartner, IPartnerOptions, IUser, partnerName, userName} from "./data/database";
 import {ReactNode} from "react";
 import {IContainerProps} from "./containers/Container";
 import {CustomerCatalog} from "./containers/CustomerCatalog";
@@ -51,6 +51,7 @@ class App extends React.Component<IAppProps, IAppState> {
 		this.determinePage = this.determinePage.bind(this);
 		this.addToCatalogue = this.determinePage.bind(this);
 		this.removeFromCatalogue = this.removeFromCatalogue.bind(this);
+		this.editPartnerOptions = this.editPartnerOptions.bind(this);
 	}
 
 	private toggle(): void {
@@ -123,6 +124,17 @@ class App extends React.Component<IAppProps, IAppState> {
 			that.setState({partnerKey: username as partnerName}, resolve);
 		});
 		return !(partner === undefined || partner.password !== password);
+	}
+
+	private async editPartnerOptions(partnerOptions: IPartnerOptions): Promise<void> {
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		database.partners[this.state.partnerKey] = {
+			...database.partners[this.state.partnerKey],
+			...partnerOptions,
+		};
+		await new Promise((resolve: () => void) => {
+			this.setState({database}, resolve)
+		});
 	}
 
 	private createNavLinks(pageKey: any): ReactNode {
