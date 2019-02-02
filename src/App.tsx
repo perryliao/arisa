@@ -13,6 +13,7 @@ import {defaultDatabase, IDatabase, IPartner, IUser, partnerName, userName} from
 import {ReactNode} from "react";
 import {IContainerProps} from "./containers/Container";
 import {CustomerCatalog} from "./containers/CustomerCatalog";
+import {IProductInterface} from "./bestBuyAPIs/bestBuyAPIs";
 
 enum page {
 	PartnerPortalLogin,
@@ -48,6 +49,8 @@ class App extends React.Component<IAppProps, IAppState> {
 		this.changePage = this.changePage.bind(this);
 		this.createNavLinks = this.createNavLinks.bind(this);
 		this.determinePage = this.determinePage.bind(this);
+		this.addToCatalogue = this.determinePage.bind(this);
+		this.removeFromCatalogue = this.removeFromCatalogue.bind(this);
 	}
 
 	private toggle(): void {
@@ -74,6 +77,26 @@ class App extends React.Component<IAppProps, IAppState> {
 			that.setState({userKey: username as userName}, resolve);
 		});
 		return success;
+	}
+
+	private async addToCatalogue(product: IProductInterface): Promise<void> {
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		database.partners[this.state.partnerKey].catalogue[product.id] = product;
+		await new Promise((resolve: () => void) => {
+			this.setState({database}, resolve)
+		});
+	}
+
+	private async removeFromCatalogue(product: IProductInterface): Promise<void> {
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		try {
+			delete database.partners[this.state.partnerKey].catalogue[product.id];
+			await new Promise((resolve: () => void) => {
+				this.setState({database}, resolve)
+			});
+		} catch (err) {
+
+		}
 	}
 
 	private async loginPartner(username: string, password: string): Promise<boolean> {
@@ -107,6 +130,11 @@ class App extends React.Component<IAppProps, IAppState> {
 		const props: IContainerProps = {
 			loginUser: this.loginUser,
 			loginPartner: this.loginPartner,
+			addToCatalogue: this.addToCatalogue,
+			removeFromCatalogue: this.removeFromCatalogue,
+			database: this.state.database,
+			partnerKey: this.state.partnerKey,
+			userKey: this.state.userKey,
 		};
 		return React.createElement(App.pages[this.state.currentPage].pointer, props);
 	}

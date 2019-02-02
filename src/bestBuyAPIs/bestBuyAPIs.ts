@@ -11,12 +11,9 @@ const searchURLB: string = "&storeId=&zipCode=&facetsOnly=&platform=&lang=en";
  * @param search
  */
 export async function searchProducts(search: string): Promise<IProductInterfaces> {
-    console.log("search:", search);
     try {
         let res: any = await Axios.get(searchURLA + search + searchURLB);
         res = res.data.searchApi.documents;
-
-        console.log("res documents:", res);
 
         const products: IProductInterfaces = {};
 
@@ -29,6 +26,7 @@ export async function searchProducts(search: string): Promise<IProductInterfaces
                     description: current.summary.meta.description,
                     price: current.priceBlock.itemPrice.regularPrice,
                     imageURL: current.summary.media.primaryImage.url,
+                    id: current.skuId
                 };
             }
         }
@@ -43,6 +41,7 @@ export async function searchProducts(search: string): Promise<IProductInterfaces
                 description: "error",
                 price: "error",
                 imageURL: "error",
+                id: "error"
             }
         };
     }
@@ -53,6 +52,7 @@ export interface IProductInterface {
     description: string;
     price: string;
     imageURL: string;
+    id: string;
 }
 
 export interface IProductInterfaces {
