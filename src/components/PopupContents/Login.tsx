@@ -4,6 +4,7 @@ import {EnhancedComponent, IEnhancedComponentProps, IEnhancedComponentState} fro
 import {TextInput} from "../TextInput";
 import {Button} from "reactstrap";
 import "../../App.css";
+import {Container} from "../../containers/Container";
 
 class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 
@@ -11,12 +12,46 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 		...EnhancedComponent.defaultProps,
 	};
 
+	private nameRef: TextInput;
+	private passwordRef: TextInput;
 
 	protected constructor(props: ILoginProps) {
 		super(props);
 		this.state = {
 			...this.state,
 		};
+
+		this.handleLogin = this.handleLogin.bind(this);
+		this.saveNameRef = this.saveNameRef.bind(this);
+		this.savePasswordRef = this.savePasswordRef.bind(this);
+	}
+
+	private handleLogin(callback: () => void): () => void {
+		return(() => {
+			// validate...
+			let attempt: boolean = false;
+			if (!attempt) {
+				// retry login
+				console.log(attempt);
+				if (this.nameRef && this.passwordRef && this.props.login) {
+					this.props.login(this.nameRef.getText(), this.passwordRef.getText())
+						.then((res: any) => {
+							console.log(res);
+						}).catch((err: any) => {
+							console.log(err);
+					})
+				}
+			}
+			callback();
+		});
+	}
+
+	private saveNameRef(ref: TextInput): void {
+		this.nameRef = ref;
+	}
+
+	private savePasswordRef(ref: TextInput): void {
+		this.passwordRef = ref;
 	}
 
 	public render(): ReactNode {
@@ -24,10 +59,10 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 			<div className={"CenterAllColumn"}>
 				<img src={"rbc_icon.png"}/>
 				<p className={"BestBuyBlack popupHeaderText"}>Login to RBC</p>
-				<TextInput placeholder={"Name"}/>
-				<TextInput placeholder={"Password"} secureText={true}/>
+				<TextInput ref={this.saveNameRef} placeholder={"Name"}/>
+				<TextInput ref={this.savePasswordRef} placeholder={"Password"} secureText={true}/>
 				<div style={{height: 15}}/>
-				<Button className={"jerryButton"} onClick={this.props.onClick} >Login</Button>{' '}
+				<Button className={"jerryButton"} onClick={this.handleLogin(this.props.onClick)} >Login</Button>{' '}
 			</div>
 		);
 	}
@@ -35,6 +70,7 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 
 interface ILoginProps extends IEnhancedComponentProps {
 	onClick?: () => void;
+	login?: (username: string, password: string) => Promise<boolean>;
 }
 
 interface ILoginState extends IEnhancedComponentState {

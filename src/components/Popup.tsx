@@ -2,6 +2,7 @@ import * as React from "react";
 import {ReactNode} from "react";
 import {EnhancedComponent, IEnhancedComponentProps, IEnhancedComponentState} from "./EnhancedComponent";
 import {Button, Modal, ModalBody, ModalFooter} from "reactstrap";
+import {Container} from "../containers/Container";
 
 class Popup extends EnhancedComponent<IPopupProps, IPopupState> {
 

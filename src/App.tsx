@@ -2,8 +2,8 @@ import * as React from 'react';
 import {ReactNode} from 'react';
 import './App.css';
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink,} from "reactstrap";
-import {defaultDatabase, IDatabase, IPartner, IUser, partnerName, userName} from "./data/database";
-import {IContainerProps, PopupModalsEnum} from "./containers/Container";
+import {defaultDatabase, IDatabase, IPartner, IPartnerOptions, IUser, partnerName, userName} from "./data/database";
+import {Container, IContainerProps, PopupModalsEnum} from "./containers/Container";
 import {CustomerCatalog} from "./containers/CustomerCatalog";
 import {IPopupReqs, Popup} from "./components/Popup";
 import {IProductInterface} from "./bestBuyAPIs/bestBuyAPIs";
@@ -16,7 +16,7 @@ enum page {
     PartnerPortalLogin,
     PartnerPortalSettings,
     PartnerCatalogueSettings,
-    UserPortalLogin,
+    // UserPortalLogin,
     UserPortalStore,
 }
 
@@ -27,7 +27,7 @@ class App extends React.Component<IAppProps, IAppState> {
         partnerKey: partnerName.RBC,
         userKey: userName.MICHELLE,
         isOpen: true,
-        currentPage: page.UserPortalLogin,
+        currentPage: page.PartnerPortalSettings,
         loginPopupOpen: false,
         balancePopupOpen: false,
     };
@@ -36,7 +36,7 @@ class App extends React.Component<IAppProps, IAppState> {
         [page.PartnerPortalLogin]: {pointer: CustomerCatalog, name: "Partner Login"},
         [page.PartnerPortalSettings]: {pointer: PartnerConfig, name: "Partner Settings"},
         [page.PartnerCatalogueSettings]: {pointer: PartnerCatalog, name: "Partner Catalogue"},
-        [page.UserPortalLogin]: {pointer: CustomerCatalog, name: "User Login"},
+        // [page.UserPortalLogin]: {pointer: CustomerCatalog, name: "User Login"},
         [page.UserPortalStore]: {pointer: CustomerCatalog, name: "User Store"},
     };
 
@@ -150,7 +150,7 @@ class App extends React.Component<IAppProps, IAppState> {
                 return {
                     toggleFn: this.toggleLoginPopup,
                     open: this.state.loginPopupOpen,
-                    component: <Login onClick={this.toggleLoginPopup}/>
+                    component: <Login onClick={this.toggleLoginPopup} login={this.loginUser}/>
                 };
             default:
                 return {
@@ -187,9 +187,18 @@ class App extends React.Component<IAppProps, IAppState> {
                     </Collapse>
                 </Navbar>
                 <div className="container">
-                    {this.state.loginPopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.LOGIN)} modalClassName={"loginPopup"}/>}
+                    {this.state.loginPopupOpen &&
+						<Popup
+							reqs={this.determineModalFunction(PopupModalsEnum.LOGIN)}
+							modalClassName={"loginPopup"}
+						/>
+					}
                     {this.state.balancePopupOpen &&
-                    <Popup reqs={this.determineModalFunction(PopupModalsEnum.BALANCE)} modalClassName={"balancePopup"}/>}
+                   		<Popup
+							reqs={this.determineModalFunction(PopupModalsEnum.BALANCE)}
+							modalClassName={"balancePopup"}
+						/>
+                   	}
                     {this.determinePage()}
                 </div>
             </div>
