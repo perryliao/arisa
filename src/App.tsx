@@ -166,7 +166,10 @@ class App extends React.Component<IAppProps, IAppState> {
 					</Collapse>
 				</Navbar>
 				<div className="container">
-					<Popup reqs={this.determineModalFunction(PopupModalsEnum.LOGIN)}/>
+					{this.state.loginPopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.LOGIN)}/>}
+					{this.state.balancePopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.BALANCE)}/>}
+					{this.state.processingPopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.PROCESSING)}/>}
+					{this.state.donePopupOpen && <Popup reqs={this.determineModalFunction(PopupModalsEnum.DONE)}/>}
 					{this.determinePage()}
 				</div>
 			</div>
