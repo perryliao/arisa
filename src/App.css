@@ -68,6 +68,7 @@ p {
   padding: 20px;
   flex-direction: column;
   margin: 15px;
+  word-break: break-all;
 }
 
 .productCardGreen {
@@ -291,6 +292,10 @@ p {
   color: white;
   font-size: 18px;
   letter-spacing: 0.1em;;
+}
+
+.jerryButtonSmall {
+  font-size: 14px !important;
 }
 
 .popupHeaderText {

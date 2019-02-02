@@ -11,7 +11,9 @@ class ItemAddedAlert extends EnhancedComponent<IItemAddedAlertProps, IItemAddedA
         numberInCatalog: 0,
     };
 
-    private static appendMessageA: string = "added to catalog! ";
+    private static addWord: string = " added to";
+    private static subtractWord: string = " removed from";
+    private static appendMessageA: string = " catalog! ";
     private static singularNumberMessage: string = " item";
     private static pluralNumberMessage: string = " items";
     private static appendMessageB: string = " in catalog.";
@@ -34,7 +36,7 @@ class ItemAddedAlert extends EnhancedComponent<IItemAddedAlertProps, IItemAddedA
                     className="itemAddedAlertImage"
                 />
                 <p>
-                    {this.props.itemName + ItemAddedAlert.appendMessageA + this.props.numberInCatalog + determinePlural + ItemAddedAlert.appendMessageB}
+                    {this.props.itemName + (this.props.operatorWord ? ItemAddedAlert.addWord : ItemAddedAlert.subtractWord) + ItemAddedAlert.appendMessageA + this.props.numberInCatalog + determinePlural + ItemAddedAlert.appendMessageB}
                 </p>
             </div>
         );
@@ -44,6 +46,7 @@ class ItemAddedAlert extends EnhancedComponent<IItemAddedAlertProps, IItemAddedA
 interface IItemAddedAlertProps extends IEnhancedComponentProps {
     itemName: string;
     numberInCatalog: number;
+    operatorWord?: boolean;
 }
 
 interface IItemAddedAlertState extends IEnhancedComponentState {

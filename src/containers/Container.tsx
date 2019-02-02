@@ -45,6 +45,7 @@ interface IContainerProps {
 	database?: IDatabase,
 	partnerKey?: partnerName,
 	userKey?: userName,
+	catalogueLength?: number;
 }
 
 interface IContainerState {
