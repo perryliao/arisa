@@ -99,6 +99,19 @@ class App extends React.Component<IAppProps, IAppState> {
 		}
 	}
 
+	private async makeTransaction(points: number): Promise<boolean> {
+		const user: IUser = this.state.database.partners[this.state.partnerKey].users[this.state.userKey];
+		if (points > user.balance) {
+			return false;
+		}
+		const database: IDatabase = JSON.parse(JSON.stringify(this.state.database));
+		database.partners[this.state.partnerKey].users[this.state.userKey].balance -= points;
+		await new Promise((resolve: () => void) => {
+			this.setState({database}, resolve)
+		});
+		return true;
+	}
+
 	private async loginPartner(username: string, password: string): Promise<boolean> {
 		const partner: IPartner = this.state.database.partners[username];
 		const success: boolean = !(partner === undefined || partner.password !== password);
@@ -132,6 +145,7 @@ class App extends React.Component<IAppProps, IAppState> {
 			loginPartner: this.loginPartner,
 			addToCatalogue: this.addToCatalogue,
 			removeFromCatalogue: this.removeFromCatalogue,
+			makeTransaction: this.makeTransaction,
 			database: this.state.database,
 			partnerKey: this.state.partnerKey,
 			userKey: this.state.userKey,

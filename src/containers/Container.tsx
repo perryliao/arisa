@@ -40,6 +40,7 @@ interface IContainerProps {
 	loginPartner?: (username: string, password: string) => Promise<boolean>,
 	addToCatalogue?: (product: IProductInterface) => Promise<void>,
 	removeFromCatalogue?: (product: IProductInterface) => Promise<void>,
+	makeTransaction?: (points: number) => Promise<boolean>,
 	database?: IDatabase,
 	partnerKey?: partnerName,
 	userKey?: userName,
