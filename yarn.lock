@@ -51,6 +51,13 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/reactstrap@^7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@types/reactstrap/-/reactstrap-7.1.1.tgz#0fefe6f93c65da192ab3e8b5ac2952b46b080a21"
+  dependencies:
+    "@types/react" "*"
+    popper.js "^1.14.1"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
