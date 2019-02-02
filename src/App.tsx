@@ -50,7 +50,7 @@ class App extends React.Component<IAppProps, IAppState> {
 		this.changePage = this.changePage.bind(this);
 		this.createNavLinks = this.createNavLinks.bind(this);
 		this.determinePage = this.determinePage.bind(this);
-		this.addToCatalogue = this.determinePage.bind(this);
+		this.addToCatalogue = this.addToCatalogue.bind(this);
 		this.removeFromCatalogue = this.removeFromCatalogue.bind(this);
 	}
 
