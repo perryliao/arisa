@@ -10,7 +10,7 @@ class Balance extends EnhancedComponent<IBalanceProps, IBalanceState> {
 	public static defaultProps: IBalanceProps = {
 		...EnhancedComponent.defaultProps,
 		myPoints: 42069,
-		addedPoints: 15000,
+		addedPoints: "15000",
 	};
 
 
@@ -30,12 +30,12 @@ class Balance extends EnhancedComponent<IBalanceProps, IBalanceState> {
 						<p style={{fontWeight: 500}}>{"   " + this.props.myPoints.toString() + " Pts"}</p>
 						<p>{"-" + this.props.addedPoints.toString() + " Pts"}</p>
 						<hr/>
-						<p style={{fontWeight: 500}}>{"   " + (this.props.myPoints - this.props.addedPoints).toString() + " Pts"}</p>
+						<p style={{fontWeight: 500}}>{"   " + (this.props.myPoints - parseInt(this.props.addedPoints, 10)).toString() + " Pts"}</p>
 						<p style={{fontSize: 8}}> remaining</p>
 					</div>
 				</div>
 				<div style={{height: 15}}/>
-				<Button className={"jerryButton"} onClick={this.props.onClick}>Login</Button>{' '}
+				<Button className={"jerryButton"} onClick={this.props.onClick}>Done</Button>{' '}
 			</div>
 		);
 	}
@@ -43,7 +43,7 @@ class Balance extends EnhancedComponent<IBalanceProps, IBalanceState> {
 
 interface IBalanceProps extends IEnhancedComponentProps {
 	myPoints: number;
-	addedPoints: number;
+	addedPoints: string;
 	onClick?: () => void;
 }
 

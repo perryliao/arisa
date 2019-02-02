@@ -26,23 +26,20 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 		this.savePassword = this.savePassword.bind(this);
 	}
 
-	private handleLogin(callback: () => void): () => void {
-		return(() => {
-			// validate...
-			let attempt: boolean = false;
-			if (!attempt) {
-				// retry login
-				console.log(attempt);
-				if (this.name && this.password && this.props.login) {
-					console.log(this.name, this.password);
-					this.props.login(this.name, this.password)
-						.then((res: any) => {
-							attempt = !res;
-						})
-				}
-			}
-			callback();
-		});
+	private handleLogin(): void {
+		// validate...
+		if (this.name && this.password && this.props.login) {
+			this.props.login(this.name, this.password)
+				.then((res: boolean) => {
+					if (res) {
+						this.props.onClick();
+						this.props.balancePopupFn();
+					} else {
+						// login failed
+						alert("Wrong credentials, please try again.")
+					}
+				})
+		}
 	}
 
 	private saveName(event: any): void {
@@ -61,7 +58,7 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 				<TextInput inputProps={{onChange: this.saveName}} placeholder={"Name"}/>
 				<TextInput inputProps={{onChange: this.savePassword}} placeholder={"Password"} secureText={true}/>
 				<div style={{height: 15}}/>
-				<Button className={"jerryButton"} onClick={this.handleLogin(this.props.onClick)} >Login</Button>{' '}
+				<Button className={"jerryButton"} onClick={this.handleLogin} >Login</Button>{' '}
 			</div>
 		);
 	}
@@ -70,6 +67,7 @@ class Login extends EnhancedComponent<ILoginProps, ILoginState> {
 interface ILoginProps extends IEnhancedComponentProps {
 	onClick?: () => void;
 	login?: (username: string, password: string) => Promise<boolean>;
+	balancePopupFn?: () => void;
 }
 
 interface ILoginState extends IEnhancedComponentState {

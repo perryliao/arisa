@@ -182,13 +182,17 @@ class App extends React.Component<IAppProps, IAppState> {
                 return {
                     toggleFn: this.toggleLoginPopup,
                     open: this.state.loginPopupOpen,
-                    component: <Login onClick={this.toggleLoginPopup} login={this.loginUser}/>
+                    component: <Login
+						onClick={this.toggleLoginPopup}
+						login={this.loginUser}
+						balancePopupFn={this.toggleBalancePopup}
+					/>
                 };
             default:
                 return {
                     toggleFn: this.toggleBalancePopup,
                     open: this.state.balancePopupOpen,
-                    component: <Balance onClick={this.toggleBalancePopup} addedPoints={25252}/>,
+                    component: <Balance onClick={this.toggleBalancePopup} addedPoints={this.state.currentViewingPointPrice}/>,
                     rounded: true
                 };
         }
