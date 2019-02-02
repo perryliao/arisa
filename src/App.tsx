@@ -137,7 +137,8 @@ class App extends React.Component<IAppProps, IAppState> {
             removeFromCatalogue: this.removeFromCatalogue,
             database: this.state.database,
             partnerKey: this.state.partnerKey,
-            userKey: this.state.userKey
+            userKey: this.state.userKey,
+            catalogueLength: Object.keys(this.state.database.partners[this.state.partnerKey].catalogue).length,
         };
         return React.createElement(App.pages[this.state.currentPage].pointer, props);
     }
