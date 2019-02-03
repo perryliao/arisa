@@ -13,12 +13,13 @@ import {Login} from "./components/PopupContents/Login";
 import {Balance} from "./components/PopupContents/Balance";
 import {Done} from "./components/PopupContents/Done";
 import {PartnerLogin} from "./containers/PartnerLogin";
+import {ExternalStore} from "./containers/ExternalStore";
 
 export enum page {
     PartnerPortalLogin,
+	ExternalStoreAPIs,
     PartnerPortalSettings,
     PartnerCatalogueSettings,
-    // UserPortalLogin,
     UserPortalStore,
 }
 
@@ -38,9 +39,9 @@ class App extends React.Component<IAppProps, IAppState> {
 
     private static pages: { [key: string]: { pointer: any, name: string } } = {
         [page.PartnerPortalLogin]: {pointer: PartnerLogin, name: "Partner Login"},
+		[page.ExternalStoreAPIs]: {pointer: ExternalStore, name: "External Store APIs"},
         [page.PartnerPortalSettings]: {pointer: PartnerConfig, name: "Partner Settings"},
         [page.PartnerCatalogueSettings]: {pointer: PartnerCatalog, name: "Partner Catalogue"},
-        // [page.UserPortalLogin]: {pointer: CustomerCatalog, name: "User Login"},
         [page.UserPortalStore]: {pointer: CustomerCatalog, name: "User Store"},
     };
 
