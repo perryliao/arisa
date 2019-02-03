@@ -54,7 +54,7 @@ const defaultUsers: {[key: string]: IUser} = {
 	[userName.JERRY]: defaultUser,
 };
 
-const defaultCatalogue: {[key: string]: IProductInterface} = {};
+const defaultCatalogue: any = {};
 
 const defaultPartner: IPartner = {
 	name: partnerName.RBC,

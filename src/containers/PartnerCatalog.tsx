@@ -41,11 +41,17 @@ class PartnerCatalog extends Container<IPartnerCatalogProps, IPartnerCatalogStat
             if (res) {
                 that.setState({
                     products: res,
+                }, () => {
+                    console.log(res);
                 });
             }
         }).catch((err: any) => {
             alert(err);
         });
+    }
+
+    public componentDidMount(): void {
+        this.searchBarOnChange("" as any);
     }
 
     private createProductList(paramProducts: any = {}): ReactNode[] {
