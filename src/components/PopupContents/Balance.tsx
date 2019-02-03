@@ -33,11 +33,11 @@ class Balance extends EnhancedComponent<IBalanceProps, IBalanceState> {
 				<div className={"alignRight"}>
 					<p className={"BestBuyBlack popupHeaderText"}>Balance</p>
 					<div style={{alignItems: "flex-start"}}>
-						<p style={{fontWeight: 500, fontSize: 24}}>{"   " + this.props.myPoints.toString() + " Pts"}</p>
+						<p style={{fontWeight: 700, fontSize: 24}}>{"   " + this.props.myPoints.toString() + " Pts"}</p>
 						<p style={{fontSize: 24, fontWeight: 300}}>{"-" + this.props.addedPoints.toString() + " Pts"}</p>
 						<hr/>
-						<p style={{fontWeight: 500, fontSize: 24}}>{"   " + (this.props.myPoints - parseInt(this.props.addedPoints, 10)).toString() + " Pts"}</p>
-						<p style={{fontSize: 14}}> remaining</p>
+						<p style={{fontWeight: 700, fontSize: 24}}>{"   " + (this.props.myPoints - parseInt(this.props.addedPoints, 10)).toString() + " Pts"}</p>
+						<p style={{fontSize: 14, bottom: 8}}> remaining</p>
 					</div>
 				</div>
 				<div style={{height: 15}}/>

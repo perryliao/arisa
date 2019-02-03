@@ -30,7 +30,7 @@ class App extends React.Component<IAppProps, IAppState> {
         partnerKey: partnerName.RBC,
         userKey: userName.MICHELLE,
         isOpen: true,
-        currentPage: page.PartnerPortalLogin,
+        currentPage: page.PartnerCatalogueSettings,
         loginPopupOpen: false,
         balancePopupOpen: false,
 		donePopupOpen: false,
