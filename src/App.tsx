@@ -13,12 +13,13 @@ import {Login} from "./components/PopupContents/Login";
 import {Balance} from "./components/PopupContents/Balance";
 import {Done} from "./components/PopupContents/Done";
 import {PartnerLogin} from "./containers/PartnerLogin";
+import {ExternalStore} from "./containers/ExternalStore";
 
 export enum page {
     PartnerPortalLogin,
+	ExternalStoreAPIs,
     PartnerPortalSettings,
     PartnerCatalogueSettings,
-    // UserPortalLogin,
     UserPortalStore,
 }
 
@@ -38,9 +39,9 @@ class App extends React.Component<IAppProps, IAppState> {
 
     private static pages: { [key: string]: { pointer: any, name: string } } = {
         [page.PartnerPortalLogin]: {pointer: PartnerLogin, name: "Partner Login"},
+		[page.ExternalStoreAPIs]: {pointer: ExternalStore, name: "External Store APIs"},
         [page.PartnerPortalSettings]: {pointer: PartnerConfig, name: "Partner Settings"},
         [page.PartnerCatalogueSettings]: {pointer: PartnerCatalog, name: "Partner Catalogue"},
-        // [page.UserPortalLogin]: {pointer: CustomerCatalog, name: "User Login"},
         [page.UserPortalStore]: {pointer: CustomerCatalog, name: "User Store"},
     };
 
@@ -238,9 +239,10 @@ class App extends React.Component<IAppProps, IAppState> {
             .filter(k => typeof page[k as any] === "number"); // ["A", "B"]
         const links: any[] = keys.map(k => page[k as any]); // [0, 1]
 
+		const headerColour: string = this.state.database.partners[this.state.partnerKey].primaryColour;
         return (
             <div className="App">
-                <Navbar style={{backgroundColor: this.state.database.partners[this.state.partnerKey].primaryColour}} dark={true} expand="md">
+                <Navbar style={{backgroundColor: headerColour ? headerColour : "#0e2324"}} dark={true} expand="md">
                     <NavbarBrand href="#">{this.state.partnerKey}</NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar={true}>

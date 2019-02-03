@@ -43,7 +43,7 @@ export enum partnerName {
 
 const defaultUser: IUser = {
 	password: "1234",
-	balance: 10000,
+	balance: 1000000,
 };
 
 const defaultUsers: {[key: string]: IUser} = {
@@ -54,18 +54,18 @@ const defaultUsers: {[key: string]: IUser} = {
 	[userName.JERRY]: defaultUser,
 };
 
-const defaultCatalogue: {[key: string]: IProductInterface} = {};
+const defaultCatalogue: any = {};
 
 const defaultPartner: IPartner = {
 	name: partnerName.RBC,
 	users: defaultUsers,
 	catalogue: defaultCatalogue,
 	logo: "/logo.svg",
-	primaryColour: "#0e2324",
-	secondaryColour: "#ffbc06",
-	pointsToCent: 1,
-	transactionEndpoint: "www.partner-website.com/transaction-endpoint",
-	loginEndpoint: "www.partner-website.com/login-endpoint",
+	primaryColour: "",
+	secondaryColour: "",
+	pointsToCent: 100,
+	transactionEndpoint: "",
+	loginEndpoint: "",
 	password: "1234",
 };
 

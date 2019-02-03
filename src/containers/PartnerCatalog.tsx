@@ -41,6 +41,8 @@ class PartnerCatalog extends Container<IPartnerCatalogProps, IPartnerCatalogStat
             if (res) {
                 that.setState({
                     products: res,
+                }, () => {
+                    console.log(res);
                 });
             }
         }).catch((err: any) => {
@@ -48,13 +50,15 @@ class PartnerCatalog extends Container<IPartnerCatalogProps, IPartnerCatalogStat
         });
     }
 
+    public componentDidMount(): void {
+        this.searchBarOnChange("" as any);
+    }
+
     private createProductList(paramProducts: any = {}): ReactNode[] {
         const products: ReactNode[] = [];
 
         let product: any;
         for (product in paramProducts) {
-            console.log("product:", paramProducts[product]);
-
             const price: number = parseInt(paramProducts[product].price, 10);
             const pointPrice: number = price * this.props.database.partners[this.props.partnerKey].pointsToCent * 100;
 

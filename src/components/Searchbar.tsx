@@ -19,7 +19,7 @@ class Searchbar extends EnhancedComponent<ISearchbarProps, ISearchbarState> {
 	public render(): ReactNode {
 		return (
 			<div>
-				<img src={"search.png"} height={"20"} style={{position: "absolute", marginLeft: 15, marginTop: 12}}/>
+				<img src={"search.png"} height={"20"} style={{position: "absolute", marginLeft: 15, marginTop: 20}}/>
 				<TextInput
 					inputProps={{
 						...this.props.inputProps,

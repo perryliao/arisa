@@ -19,7 +19,7 @@ class PartnerLogin extends Container<IPartnerLoginProps, IPartnerLoginState> {
 	}
 
 	private loginOnClick(): void {
-		this.props.changePage(page.PartnerPortalSettings)();
+		this.props.changePage(page.ExternalStoreAPIs)();
 	}
 
 	public render(): ReactNode {
