@@ -289,6 +289,8 @@ p {
   letter-spacing: 0.4px;
   line-height: 1.4;
   margin: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .TextInput::placeholder {
